@@ -19,18 +19,19 @@ export default function Card({
 	const back = useLoader(TextureLoader, backTexture);
 
 	const { rotation } = useSpring({
-		rotation: isFlipped ? [0, Math.PI, 0] : [0, 0, 0],
+		rotation: isFlipped ? [0, Math.PI, 0] : [0, 0.3, 0],
 		config: { mass: 5, tension: 500, friction: 80 },
 	});
 	return (
 		<>
 			<animated.mesh
 				rotation={rotation as unknown as [number, number, number]}
+				position={[0, 0, 0]}
 				onClick={() => {
 					onClick();
-					setIsFlipped(!isFlipped);
+					setIsFlipped(true);
 				}}>
-				<planeGeometry args={[1, 1]} />
+				<planeGeometry args={[1, 1.5]} />
 				<meshStandardMaterial
 					side={DoubleSide}
 					map={isFlipped ? front : back}

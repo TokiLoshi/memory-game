@@ -3,7 +3,7 @@ import Card from "./Card";
 
 function Experience() {
 	const backpath = "./materials/back.jpg";
-	const frontpath = "./materials/back.jpg";
+	const frontpath = "./materials/ducky.jpg";
 	const onClick = () => {
 		console.log("clicked");
 	};
