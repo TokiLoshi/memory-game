@@ -1,13 +1,16 @@
 import "./style.css";
+import Card from "./Card";
 
 function Experience() {
+	const backpath = "./materials/back.jpg";
+	const frontpath = "./materials/back.jpg";
+	const onClick = () => {
+		console.log("clicked");
+	};
+
 	return (
 		<>
-			<mesh>
-				<boxGeometry args={[1, 1, 1]} />{" "}
-				{/* This defines the cube dimensions */}
-				<meshStandardMaterial color='orange' /> {/* Material and color */}
-			</mesh>
+			<Card frontTexture={frontpath} onClick={onClick} backTexture={backpath} />
 		</>
 	);
 }

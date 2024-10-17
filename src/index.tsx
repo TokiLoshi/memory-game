@@ -1,6 +1,6 @@
 import { StrictMode } from "react";
 import { createRoot } from "react-dom/client";
-import Experience from "./Experience.tsx";
+import Experience from "./Experience";
 import "./style.css";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
