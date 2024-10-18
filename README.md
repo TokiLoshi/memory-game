@@ -4,8 +4,6 @@
 
 Images were generated with AI On Canva.
 
-1. Change the cards into an array of dictionaries
-2. Shuffle the cards
 3. initialize first card and second card pair using useState
 4. set a timer to wait
 5. create a function to check if the first card and second card match

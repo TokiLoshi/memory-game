@@ -1,6 +1,7 @@
 import "./style.css";
 import Card from "./Card";
 import { v4 as uuid4 } from "uuid";
+import { useState } from "react";
 
 interface Card {
 	id: string;
@@ -68,8 +69,19 @@ function Experience({ level = 15 }) {
 	const cardMargin = 1.8;
 	const cards = shuffleCards(level, frontTexturePaths);
 	const backpath = "./materials/back.jpg";
-	const onClick = (id: string) => {
-		console.log(`Card with id ${id} clicked`);
+	const [firstCard, setFirstCard] = useState<string | undefined>();
+	const [secondCard, setSecondCard] = useState<string | undefined>();
+	console.log(`firstCard: ${firstCard}, secondCard ${secondCard}`);
+	const onClick = (id: string, path: string) => {
+		console.log(`Card with id ${id} clicked, ${path}`);
+		if (!firstCard) {
+			setFirstCard(path);
+			console.log(`Set first card as: ${path}`);
+		}
+		if (!secondCard) {
+			setSecondCard(path);
+			console.log(`Set second card as: ${path}`);
+		}
 	};
 
 	return (
@@ -78,7 +90,7 @@ function Experience({ level = 15 }) {
 				<Card
 					key={card.id}
 					frontTexture={card.frontTexture}
-					onClick={() => onClick(card.id)}
+					onClick={() => onClick(card.id, card.frontTexture)}
 					backTexture={backpath}
 					position={calculateGrid(index, gridSize, cardMargin)}
 				/>
