@@ -2,6 +2,11 @@ import "./style.css";
 import Card from "./Card";
 import { v4 as uuid4 } from "uuid";
 
+interface Card {
+	id: string;
+	frontTexture: string;
+}
+
 const frontTexturePaths = [
 	"./materials/1.jpg",
 	"./materials/2.jpg",
@@ -33,14 +38,35 @@ const calculateGrid = (
 	return [x, y, 0];
 };
 
+// Shuffle code using Fisher-yates: https://javascript.plainenglish.io/building-a-card-memory-game-in-react-e6400b226b8f
+const swap = (cards: Card[], i: number, j: number) => {
+	const temp = cards[i];
+	cards[i] = cards[j];
+	cards[j] = temp;
+};
+
+const shuffleCards = (level: number, frontTexturePaths: string[]) => {
+	const cards = Array.from({ length: level / 2 }, (_, index) => {
+		const texture = frontTexturePaths[index % frontTexturePaths.length];
+		return [
+			{ id: uuid4(), frontTexture: texture },
+			{ id: uuid4(), frontTexture: texture },
+		];
+	}).flat();
+
+	for (let i = cards.length - 1; i > 0; i--) {
+		const randomIndex = Math.floor(Math.random() * (i + 1));
+		swap(cards, i, randomIndex);
+	}
+
+	return cards;
+};
+
 function Experience({ level = 15 }) {
 	const gridSize = Math.sqrt(level);
 	console.log(`Grid size: ${gridSize}`);
 	const cardMargin = 1.8;
-	const cards = Array.from({ length: level }, (_, index) => ({
-		id: uuid4(),
-		frontTexture: frontTexturePaths[index % frontTexturePaths.length],
-	}));
+	const cards = shuffleCards(level, frontTexturePaths);
 	const backpath = "./materials/back.jpg";
 	const onClick = (id: string) => {
 		console.log(`Card with id ${id} clicked`);
