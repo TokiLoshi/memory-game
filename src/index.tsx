@@ -17,7 +17,7 @@ createRoot(document.getElementById("root")!).render(
 			<OrbitControls />
 			<ambientLight intensity={0.5} />
 			<directionalLight position={[4, 4, 1]} />
-			<Experience />
+			<Experience level={16} />
 		</Canvas>
 	</StrictMode>
 );
