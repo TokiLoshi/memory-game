@@ -1,11 +1,12 @@
 import "./style.css";
 import Card from "./Card";
 import { v4 as uuid4 } from "uuid";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface Card {
 	id: string;
 	frontTexture: string;
+	flippable: boolean;
 }
 
 const frontTexturePaths = [
@@ -50,8 +51,8 @@ const shuffleCards = (level: number, frontTexturePaths: string[]) => {
 	const cards = Array.from({ length: level / 2 }, (_, index) => {
 		const texture = frontTexturePaths[index % frontTexturePaths.length];
 		return [
-			{ id: uuid4(), frontTexture: texture },
-			{ id: uuid4(), frontTexture: texture },
+			{ id: uuid4(), frontTexture: texture, flippable: false },
+			{ id: uuid4(), frontTexture: texture, flippable: false },
 		];
 	}).flat();
 
@@ -63,25 +64,61 @@ const shuffleCards = (level: number, frontTexturePaths: string[]) => {
 	return cards;
 };
 
-function Experience({ level = 15 }) {
+function Experience({ level = 16 }) {
 	const gridSize = Math.sqrt(level);
-	console.log(`Grid size: ${gridSize}`);
 	const cardMargin = 1.8;
-	const cards = shuffleCards(level, frontTexturePaths);
+	const [cards, setCards] = useState(shuffleCards(level, frontTexturePaths));
 	const backpath = "./materials/back.jpg";
 	const [firstCard, setFirstCard] = useState<string | undefined>();
 	const [secondCard, setSecondCard] = useState<string | undefined>();
-	console.log(`firstCard: ${firstCard}, secondCard ${secondCard}`);
+	const [flippedCards, setFlippedCards] = useState<string[]>([]);
+
 	const onClick = (id: string, path: string) => {
+		console.log(`First card: ${firstCard} second card: ${secondCard}`);
+
+		if (!flippedCards.includes(id)) {
+			setFlippedCards((prev) => [...prev, id]);
+
+			setCards((prevCards) =>
+				prevCards.map((card) =>
+					card.id === id ? { ...card, flippable: true } : card
+				)
+			);
+		}
+
 		console.log(`Card with id ${id} clicked, ${path}`);
+
 		if (!firstCard) {
 			setFirstCard(path);
 			console.log(`Set first card as: ${path}`);
-		}
-		if (!secondCard) {
+		} else if (!secondCard) {
 			setSecondCard(path);
 			console.log(`Set second card as: ${path}`);
 		}
+	};
+	useEffect(() => {
+		if (firstCard && secondCard) {
+			console.log(
+				`Firstcard: ${firstCard} second ${secondCard} and ${
+					firstCard === secondCard
+				}`
+			);
+			if (firstCard === secondCard) {
+				console.log("MAthcy Matchy");
+			} else {
+				console.log("Not matchy matchy");
+				setTimeout(() => {
+					resetCards();
+				}, 1000);
+			}
+		}
+	}, [firstCard, secondCard]);
+
+	const resetCards = () => {
+		console.log("Resetting cards");
+		setFirstCard(undefined);
+		setSecondCard(undefined);
+		// setFlippedCards([]);
 	};
 
 	return (
@@ -91,6 +128,7 @@ function Experience({ level = 15 }) {
 					key={card.id}
 					frontTexture={card.frontTexture}
 					onClick={() => onClick(card.id, card.frontTexture)}
+					flippable={card.flippable}
 					backTexture={backpath}
 					position={calculateGrid(index, gridSize, cardMargin)}
 				/>

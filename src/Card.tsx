@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { TextureLoader, DoubleSide } from "three";
 import { useLoader } from "@react-three/fiber";
 import { useSpring, animated } from "@react-spring/three";
@@ -7,17 +6,18 @@ import { useControls } from "leva";
 interface CardProps {
 	frontTexture: string;
 	backTexture: string;
+	flippable: boolean;
 	onClick: () => void;
 	position: [number, number, number];
 }
 
 export default function Card({
 	frontTexture,
-	onClick,
 	backTexture,
+	onClick,
+	flippable,
 	position,
 }: CardProps) {
-	const [isFlipped, setIsFlipped] = useState(false);
 	const front = useLoader(TextureLoader, frontTexture);
 	const back = useLoader(TextureLoader, backTexture);
 
@@ -29,7 +29,7 @@ export default function Card({
 	});
 
 	const { rotation } = useSpring({
-		rotation: isFlipped ? [0, flipAngle, 0] : [0, 0.3, 0],
+		rotation: flippable ? [0, flipAngle, 0] : [0, 0.3, 0],
 		config: { mass, tension, friction },
 	});
 
@@ -39,13 +39,13 @@ export default function Card({
 				rotation={rotation as unknown as [number, number, number]}
 				position={position}
 				onClick={() => {
+					console.log("event in card triggered");
 					onClick();
-					setIsFlipped(true);
 				}}>
 				<boxGeometry args={[1, 1.5, 0.01]} />
 				<meshStandardMaterial
 					side={DoubleSide}
-					map={isFlipped ? front : back}
+					map={flippable ? back : front}
 				/>
 			</animated.mesh>
 		</>
