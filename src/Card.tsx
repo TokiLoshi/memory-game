@@ -45,7 +45,7 @@ export default function Card({
 				<boxGeometry args={[1, 1.5, 0.01]} />
 				<meshStandardMaterial
 					side={DoubleSide}
-					map={flippable ? back : front}
+					map={flippable ? front : back}
 				/>
 			</animated.mesh>
 		</>
