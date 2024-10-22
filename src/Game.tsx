@@ -16,7 +16,7 @@ export default function Game() {
 		directionalLight,
 		level,
 	} = useControls({
-		camera: folder(
+		game: folder(
 			{
 				positionX: {
 					value: 2.5,
