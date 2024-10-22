@@ -21,15 +21,16 @@ export default function Card({
 	const front = useLoader(TextureLoader, frontTexture);
 	const back = useLoader(TextureLoader, backTexture);
 
-	const { mass, tension, friction, flipAngle } = useControls({
+	const { mass, tension, friction, flipAngle, cardRotation } = useControls({
 		mass: { value: 5, min: 1, max: 10 },
 		tension: { value: 500, min: 100, max: 1000 },
 		friction: { value: 80, min: 10, max: 200 },
 		flipAngle: { value: Math.PI, min: Math.PI / 2, max: Math.PI * 2 },
+		cardRotation: { value: [0, 0.3, 0] },
 	});
 
 	const { rotation } = useSpring({
-		rotation: flippable ? [0, flipAngle, 0] : [0, 0.3, 0],
+		rotation: flippable ? [0, flipAngle, 0] : cardRotation,
 		config: { mass, tension, friction },
 	});
 

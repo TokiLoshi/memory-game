@@ -110,30 +110,6 @@ function Experience({ level = 16 }) {
 			setSecondCard(clickedCard);
 		}
 	};
-
-	// const onClick = (id: string, path: string) => {
-	// 	console.log(`First card: ${firstCard} second card: ${secondCard}`);
-
-	// 	if (!flippedCards.includes(id)) {
-	// 		setFlippedCards((prev) => [...prev, id]);
-
-	// 		setCards((prevCards) =>
-	// 			prevCards.map((card) =>
-	// 				card.id === id ? { ...card, flippable: true } : card
-	// 			)
-	// 		);
-	// 	}
-
-	// 	console.log(`Card with id ${id} clicked, ${path}`);
-
-	// 	if (!firstCard) {
-	// 		setFirstCard(path);
-	// 		console.log(`Set first card as: ${path}`);
-	// 	} else if (!secondCard) {
-	// 		setSecondCard(path);
-	// 		console.log(`Set second card as: ${path}`);
-	// 	}
-	// };
 	useEffect(() => {
 		if (firstCard && secondCard) {
 			setIsProcessing(true);
