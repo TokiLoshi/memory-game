@@ -1,6 +1,6 @@
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { useLoader } from "@react-three/fiber";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { Text, Float } from "@react-three/drei";
 import { useGameStore } from "./Gamestore";
 import { useControls, folder } from "leva";
@@ -11,6 +11,8 @@ export default function Table() {
 	const table = useLoader(GLTFLoader, "./models/table.glb");
 	const candle = useLoader(GLTFLoader, "./models/candle.gltf");
 	const gameState = useGameStore((state) => state.gameState);
+	const moves = useGameStore((state) => state.moves);
+	useEffect(() => {}, []);
 	const { tablePosition, candlePosition, tableRotation } = useControls({
 		table: folder(
 			{
@@ -57,6 +59,16 @@ export default function Table() {
 				scale={5}
 				rotation={tableRotation}
 			/>
+			<Float floatIntensity={0.25} rotationIntensity={0.25}>
+				<Text
+					scale={1}
+					position={[-1.75, 3.2, 0]}
+					rotation-y={0.25}
+					color='orange'
+					maxWidth={0.25}>
+					{moves}
+				</Text>
+			</Float>
 		</>
 	);
 }

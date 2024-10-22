@@ -4,19 +4,21 @@
 
 Images were generated with AI On Canva.
 
-8. create a counter to keep track of the cards matched
-9. add zustand to keep track of the phases
-10. addlevels so user can choose how many cards there should be
-11. Add a loading page
-12. Add a restart button when game is done, and display victory message with total guesses
-13. Fix lighting
-14. Make backdrop more exciting
-15. Optimize angles and add everything to leva
-16. Decide on values
-17. Make leva only display on /debug route
-18. Add sound
-19. Check performances
-20. Done - do a happy dance
+1. Add shadow from candle
+2. Add shadow from cards
+3. Map out game phases so Zustand is totally hooked up
+4. Add a restart button when game is done and total moves
+5. On start cards should be in a pile
+6. On Playing change the camera angle to look at table
+7. Configure reset game
+8. Add in env map for background
+9. Add smoke to candle for animation
+10. Make buttons look nicer
+11. Add sound effects for good matches
+12. Add sound effect for bad matches.
+13. Change leva to only display on debug route
+14. Check performances
+15. Get Feedback decide on optimizations
 
 Resources:
 
