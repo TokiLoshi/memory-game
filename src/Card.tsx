@@ -22,13 +22,13 @@ export default function Card({
 	const back = useLoader(TextureLoader, backTexture);
 
 	const { mass, tension, friction, flipAngle, cardRotation } = useControls({
-		cardControls: folder(
+		cards: folder(
 			{
 				mass: { value: 5, min: 1, max: 10 },
 				tension: { value: 500, min: 100, max: 1000 },
 				friction: { value: 80, min: 10, max: 200 },
 				flipAngle: { value: Math.PI, min: Math.PI / 2, max: Math.PI * 2 },
-				cardRotation: { value: [0, 0.3, 0] },
+				cardRotation: { value: [0, 0.0, 0], step: 0.1 },
 			},
 			{ collapsed: true }
 		),

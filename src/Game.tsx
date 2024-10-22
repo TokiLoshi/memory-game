@@ -7,27 +7,11 @@ import Table from "./Table";
 // import { PresentationControls } from "@react-three/drei";
 
 export default function Game() {
-	const {
-		positionX,
-		positionY,
-		positionZ,
-		fov,
-		ambientLight,
-		directionalLight,
-		level,
-	} = useControls({
+	const { position, fov, ambientLight, directionalLight, level } = useControls({
 		game: folder(
 			{
-				positionX: {
-					value: 2.5,
-					step: 0.1,
-				},
-				positionY: {
-					value: 4,
-					step: 0.1,
-				},
-				positionZ: {
-					value: 6,
+				position: {
+					value: [2.5, 4, 6],
 					step: 0.1,
 				},
 				fov: {
@@ -61,9 +45,8 @@ export default function Game() {
 				fov: fov,
 				near: 0.1,
 				far: 200,
-				position: [positionX, positionY, positionZ],
+				position: position,
 			}}>
-			{/* <Leva collapsed={true} /> */}
 			<OrbitControls />
 			<ambientLight intensity={ambientLight} />
 			<directionalLight position={directionalLight} />

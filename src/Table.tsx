@@ -19,7 +19,7 @@ export default function Table() {
 					step: 0.1,
 				},
 				candlePosition: {
-					value: [-1.2, -0.53, 2.2],
+					value: [-2.6, 1, 2.2],
 					step: 0.1,
 				},
 				tableRotation: {
@@ -54,7 +54,7 @@ export default function Table() {
 				object={table.scene}
 				ref={tableRef}
 				position={tablePosition}
-				scale={3}
+				scale={5}
 				rotation={tableRotation}
 			/>
 		</>
