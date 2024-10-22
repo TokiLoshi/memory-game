@@ -4,11 +4,6 @@
 
 Images were generated with AI On Canva.
 
-3. initialize first card and second card pair using useState
-4. set a timer to wait
-5. create a function to check if the first card and second card match
-6. if they don't match flip them
-7. reset the first and second card
 8. create a counter to keep track of the cards matched
 9. add zustand to keep track of the phases
 10. addlevels so user can choose how many cards there should be
@@ -31,3 +26,7 @@ Resources:
 4. https://javascript.plainenglish.io/building-a-card-memory-game-in-react-e6400b226b8f
 5. https://dev.to/shubhamreacts/build-a-card-memory-game-with-react-23dj
 6. https://github.com/wass08/r3f-multiplayer-pirate-card-game
+
+Models from [poly.pizza](https://poly.pizza) and Pmnd.rs Market
+[Small Table by Quaternius](https://poly.pizza/m/rAEBvfb1FT) CC0
+[Candle by Kay Lousberg](https://market.pmnd.rs/model/candle) CC0

@@ -3,6 +3,8 @@ import Experience from "./Experience";
 import "./style.css";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import Table from "./Table";
+// import { PresentationControls } from "@react-three/drei";
 
 export default function Game() {
 	const {
@@ -54,6 +56,7 @@ export default function Game() {
 	});
 	return (
 		<Canvas
+			shadows
 			camera={{
 				fov: fov,
 				near: 0.1,
@@ -65,6 +68,7 @@ export default function Game() {
 			<ambientLight intensity={ambientLight} />
 			<directionalLight position={directionalLight} />
 			<Experience level={level} />
+			<Table />
 		</Canvas>
 	);
 }
