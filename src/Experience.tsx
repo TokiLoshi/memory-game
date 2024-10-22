@@ -48,13 +48,23 @@ const swap = (cards: Card[], i: number, j: number) => {
 	cards[j] = temp;
 };
 
-const shuffleCards = (level: number, frontTexturePaths: string[]) => {
-	const cards = Array.from({ length: level / 2 }, (_, index) => {
+const shuffleCards = (level: number, frontTexturePaths: string[]): Card[] => {
+	const cards: Card[] = Array.from({ length: level / 2 }, (_, index) => {
 		const texture = frontTexturePaths[index % frontTexturePaths.length];
 		return [
-			{ id: uuid4(), frontTexture: texture, flippable: true, isMatched: false },
+			{
+				id: uuid4(),
+				frontTexture: texture,
+				flippable: false,
+				isMatched: false,
+			},
 
-			{ id: uuid4(), frontTexture: texture, flippable: true, isMatched: false },
+			{
+				id: uuid4(),
+				frontTexture: texture,
+				flippable: false,
+				isMatched: false,
+			},
 		];
 	}).flat();
 
