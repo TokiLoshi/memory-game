@@ -84,7 +84,7 @@ export default function Game() {
 				position={cameraPosition}
 			/>
 			<Environment
-				files='./envMaps/library.hdr'
+				files='./envMaps/library.jpg'
 				background
 				ground={{
 					height: 7,

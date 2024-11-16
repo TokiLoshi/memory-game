@@ -1,23 +1,27 @@
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { useLoader } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
-import {
-	Text,
-	Float,
-	Text3D,
-	useMatcapTexture,
-	Center,
-} from "@react-three/drei";
+import { Float, Text3D, useMatcapTexture } from "@react-three/drei";
 import { useGameStore } from "./Gamestore";
 import { useControls, folder } from "leva";
 import { Object3D, Mesh } from "three";
 
 export default function Table() {
+	// Refs
 	const tableRef = useRef();
 	const candleRef = useRef();
+	const titleRef = useRef<Mesh>(null!);
+	const startRef = useRef<Mesh>(null!);
+	const countRef = useRef<Mesh>(null!);
+
+	// Font Textures
+	const [matcapTexture] = useMatcapTexture("586A51_CCD5AA_8C9675_8DBBB7", 256);
+
+	// Models
 	const table = useLoader(GLTFLoader, "./models/table.glb");
 	const candle = useLoader(GLTFLoader, "./models/candle.gltf");
-	console.log(candle);
+
+	// Add shadows to the models
 	const traverseCandle = (object: Object3D) => {
 		if (object instanceof Mesh) {
 			object.castShadow = true;
@@ -28,9 +32,12 @@ export default function Table() {
 	};
 	traverseCandle(candle.scene);
 
+	// Game State
 	const gameState = useGameStore((state) => state.gameState);
 	const moves = useGameStore((state) => state.moves);
 	useEffect(() => {}, []);
+
+	// Leva Controls
 	const {
 		tablePosition,
 		candlePosition,
@@ -45,7 +52,7 @@ export default function Table() {
 					step: 0.1,
 				},
 				candlePosition: {
-					value: [5.4, 2.7, -4.1],
+					value: [5.4, 2.7, -0.6],
 					step: 0.1,
 				},
 				tableRotation: {
@@ -53,19 +60,22 @@ export default function Table() {
 					step: 0.1,
 				},
 				startPosition: {
-					value: [-1.4, 9.3, -2.4],
+					value: [0, 6.3, -0.7],
 					step: 0.1,
 				},
 				counterPosition: {
-					value: [5.4, 6.4, -3.7],
+					value: [5, 6.3, -0.7],
 					step: 0.1,
 				},
 			},
 			{ collapsed: true }
 		),
 	});
-	const [matcapTexture] = useMatcapTexture("7B5254_E9DCC7_B19986_C8AC91", 256);
-	const titleRef = useRef<Mesh>(null!);
+
+	const handleStart = () => {
+		console.log("handle start");
+	};
+
 	return (
 		<>
 			{gameState === "START" && (
@@ -82,20 +92,32 @@ export default function Table() {
 							bevelSize={0.02}
 							bevelOffset={0}
 							bevelSegments={5}
+							onPointerOver={() => (document.body.style.cursor = "grab")}
+							onPointerOut={() => (document.body.style.cursor = "default")}
+							onClick={handleStart}
 							ref={titleRef}>
 							<meshMatcapMaterial matcap={matcapTexture} />
-							Hello Doto
+							Memory Game
 						</Text3D>
 					</Float>
 					<Float floatIntensity={0.25} rotationIntensity={0.25}>
-						<Text
-							scale={1}
+						<Text3D
+							font='/fonts/doto.json'
 							position={startPosition}
-							rotation-y={0.25}
-							color='black'
-							maxWidth={0.25}>
+							size={0.75}
+							height={0.2}
+							curveSegments={12}
+							bevelEnabled
+							bevelThickness={0.02}
+							bevelSize={0.02}
+							bevelOffset={0}
+							bevelSegments={5}
+							onPointerOver={() => (document.body.style.cursor = "grab")}
+							onPointerOut={() => (document.body.style.cursor = "default")}
+							ref={startRef}>
+							<meshMatcapMaterial matcap={matcapTexture} />
 							Start
-						</Text>
+						</Text3D>
 					</Float>
 				</>
 			)}
@@ -113,14 +135,21 @@ export default function Table() {
 				rotation={tableRotation}
 			/>
 			<Float floatIntensity={0.25} rotationIntensity={0.25}>
-				<Text
-					scale={1}
-					position={counterPosition}
-					rotation-y={0.25}
-					color='orange'
-					maxWidth={0.25}>
+				<Text3D
+					font='/fonts/doto.json'
+					size={0.75}
+					height={0.2}
+					curveSegments={12}
+					bevelEnabled
+					bevelThickness={0.02}
+					bevelSize={0.02}
+					bevelOffset={0}
+					bevelSegments={5}
+					ref={countRef}
+					position={counterPosition}>
+					<meshMatcapMaterial matcap={matcapTexture} />
 					{moves}
-				</Text>
+				</Text3D>
 			</Float>
 		</>
 	);

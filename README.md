@@ -4,6 +4,9 @@
 
 Images were generated with AI On Canva.
 
+TODO:
+Reduce size of blockade labs env map
+
 1. Add shadow from candle
 2. Add shadow from cards
 3. Map out game phases so Zustand is totally hooked up

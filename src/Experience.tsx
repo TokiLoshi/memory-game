@@ -3,7 +3,7 @@ import Card from "./Card";
 import { v4 as uuid4 } from "uuid";
 import { useState, useEffect } from "react";
 import { useGameStore } from "./Gamestore";
-import { GizmoHelper, GizmoViewport, Grid } from "@react-three/drei";
+import { Grid } from "@react-three/drei";
 import { useControls } from "leva";
 
 interface Card {
@@ -11,7 +11,16 @@ interface Card {
 	frontTexture: string;
 	flippable: boolean;
 	isMatched: boolean;
-	debug: boolean;
+	showFront: boolean;
+}
+
+type GameState = "START" | "PLAYING" | "GAME_OVER";
+
+type shuffledCards = Array<Card>;
+
+interface ExperienceProps {
+	level?: number;
+	cardMargin?: number;
 }
 
 const frontTexturePaths = [
@@ -40,9 +49,15 @@ const calculateGrid = (
 ): [number, number, number] => {
 	const row = Math.floor(index / gridSize);
 	const col = index % gridSize;
-	const x = ((col - gridSize / 2) * spacing) / 1.5;
-	const z = ((row - gridSize / 2) * spacing) / 1.5;
-	return [x, 2.5, z];
+
+	const gridOffset = ((gridSize - 1) * spacing) / 2;
+	const tableX = 1.4;
+	const tableY = -1.8 + 8;
+
+	const x = tableX + col * spacing - gridOffset;
+	const y = tableY + (row * spacing - gridOffset);
+	const z = -2.2;
+	return [x, y, z];
 };
 
 // Shuffle code using Fisher-yates: https://javascript.plainenglish.io/building-a-card-memory-game-in-react-e6400b226b8f
@@ -80,17 +95,19 @@ const shuffleCards = (level: number, frontTexturePaths: string[]): Card[] => {
 	return cards;
 };
 
+const checkForMatch = (first: Card, second: Card): boolean => {
+	return first.frontTexture === second.frontTexture;
+};
+
 function Experience({ level = 16 }) {
+	// Set grid size based on user selected level
 	const gridSize = Math.sqrt(level);
 	const cardMargin = 1.8;
 	const backTexture = "./materials/back.jpg";
-	const deckPosition = useControls("Layout", {
-		deckPosition: {
-			value: { x: -3, y: 0.5, z: -1 },
-			step: 0.1,
-		},
-	});
 	const gameState = useGameStore((state) => state.gameState);
+	const flipDuration = 1500;
+
+	// Set Card Properties
 	const [cards, setCards] = useState(shuffleCards(level, frontTexturePaths));
 	const [firstCard, setFirstCard] = useState<Card | null>();
 	const [secondCard, setSecondCard] = useState<Card | null>();
@@ -99,7 +116,6 @@ function Experience({ level = 16 }) {
 	const [moves, setMoves] = useState(0);
 
 	const handleCardClick = (clickedCard: Card) => {
-		setMoves(moves + 1);
 		if (
 			isProcessing ||
 			clickedCard.isMatched ||
@@ -109,17 +125,32 @@ function Experience({ level = 16 }) {
 		) {
 			return;
 		}
+
+		setMoves(moves + 1);
+		console.log(`Moves: ${moves}`);
+
 		setCards((prevCards) =>
 			prevCards.map((card) =>
 				card.id == clickedCard.id ? { ...card, flippable: true } : card
 			)
 		);
+
+		// Show front side midway through the flip
+		setTimeout(() => {
+			setCards((prevCards) =>
+				prevCards.map((card) =>
+					card.id === clickedCard.id ? { ...card, showFront: true } : card
+				)
+			);
+		}, flipDuration / 2);
+
 		if (!firstCard) {
 			setFirstCard(clickedCard);
 		} else {
 			setSecondCard(clickedCard);
 		}
 	};
+
 	useEffect(() => {
 		if (firstCard && secondCard) {
 			setIsProcessing(true);
@@ -145,8 +176,18 @@ function Experience({ level = 16 }) {
 								: card
 						)
 					);
+					// Hide front texture halfway through
+					setTimeout(() => {
+						setCards((prevCards) =>
+							prevCards.map((card) =>
+								card.id === firstCard.id || card.id === secondCard.id
+									? { ...card, showFront: false }
+									: card
+							)
+						);
+					}, flipDuration / 2);
 					resetCards();
-				}, 1000);
+				}, flipDuration + 500);
 			}
 		}
 	}, [firstCard, secondCard]);
@@ -156,7 +197,6 @@ function Experience({ level = 16 }) {
 		setFirstCard(null);
 		setSecondCard(null);
 		setIsProcessing(false);
-		// setFlippedCards([]);
 	};
 	useEffect(() => {
 		if (score === level / 2) {
@@ -166,9 +206,6 @@ function Experience({ level = 16 }) {
 
 	return (
 		<>
-			<GizmoHelper alignment='bottom-right' margin={[80, 80]}>
-				<GizmoViewport />
-			</GizmoHelper>
 			<Grid
 				args={[20, 20]}
 				cellSize={1}
@@ -190,6 +227,7 @@ function Experience({ level = 16 }) {
 					onClick={() => handleCardClick(card)}
 					flippable={card.flippable}
 					backTexture={backTexture}
+					showFront={card.showFront}
 					position={calculateGrid(index, gridSize, cardMargin)}
 					// deckPosition={deckPosition}
 					inDeck={gameState === "GAME_OVER"}
