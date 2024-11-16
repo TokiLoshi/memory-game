@@ -32,3 +32,4 @@ Resources:
 Models from [poly.pizza](https://poly.pizza) and Pmnd.rs Market
 [Small Table by Quaternius](https://poly.pizza/m/rAEBvfb1FT) CC0
 [Candle by Kay Lousberg](https://market.pmnd.rs/model/candle) CC0
+Skybox generated using [BlockadeLabs](https://skybox.blockadelabs.com)

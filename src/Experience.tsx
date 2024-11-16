@@ -2,12 +2,16 @@ import "./style.css";
 import Card from "./Card";
 import { v4 as uuid4 } from "uuid";
 import { useState, useEffect } from "react";
+import { useGameStore } from "./Gamestore";
+import { GizmoHelper, GizmoViewport, Grid } from "@react-three/drei";
+import { useControls } from "leva";
 
 interface Card {
 	id: string;
 	frontTexture: string;
 	flippable: boolean;
 	isMatched: boolean;
+	debug: boolean;
 }
 
 const frontTexturePaths = [
@@ -36,9 +40,9 @@ const calculateGrid = (
 ): [number, number, number] => {
 	const row = Math.floor(index / gridSize);
 	const col = index % gridSize;
-	const x = (col - gridSize / 2) * spacing;
-	const y = (row - gridSize / 2) * spacing;
-	return [x, y, 0];
+	const x = ((col - gridSize / 2) * spacing) / 1.5;
+	const z = ((row - gridSize / 2) * spacing) / 1.5;
+	return [x, 2.5, z];
 };
 
 // Shuffle code using Fisher-yates: https://javascript.plainenglish.io/building-a-card-memory-game-in-react-e6400b226b8f
@@ -80,7 +84,13 @@ function Experience({ level = 16 }) {
 	const gridSize = Math.sqrt(level);
 	const cardMargin = 1.8;
 	const backTexture = "./materials/back.jpg";
-
+	const deckPosition = useControls("Layout", {
+		deckPosition: {
+			value: { x: -3, y: 0.5, z: -1 },
+			step: 0.1,
+		},
+	});
+	const gameState = useGameStore((state) => state.gameState);
 	const [cards, setCards] = useState(shuffleCards(level, frontTexturePaths));
 	const [firstCard, setFirstCard] = useState<Card | null>();
 	const [secondCard, setSecondCard] = useState<Card | null>();
@@ -156,6 +166,23 @@ function Experience({ level = 16 }) {
 
 	return (
 		<>
+			<GizmoHelper alignment='bottom-right' margin={[80, 80]}>
+				<GizmoViewport />
+			</GizmoHelper>
+			<Grid
+				args={[20, 20]}
+				cellSize={1}
+				cellThickness={1}
+				cellColor='#6f6f6f'
+				sectionSize={3}
+				sectionThickness={1.5}
+				sectionColor='#9d4b3b'
+				fadeDistance={30}
+				fadeStrength={1}
+				followCamera={false}
+				infiniteGrid={true}
+			/>
+
 			{cards.map((card, index) => (
 				<Card
 					key={card.id}
@@ -164,6 +191,9 @@ function Experience({ level = 16 }) {
 					flippable={card.flippable}
 					backTexture={backTexture}
 					position={calculateGrid(index, gridSize, cardMargin)}
+					// deckPosition={deckPosition}
+					inDeck={gameState === "GAME_OVER"}
+					index={index}
 				/>
 			))}
 		</>

@@ -1,7 +1,13 @@
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { useLoader } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
-import { Text, Float } from "@react-three/drei";
+import {
+	Text,
+	Float,
+	Text3D,
+	useMatcapTexture,
+	Center,
+} from "@react-three/drei";
 import { useGameStore } from "./Gamestore";
 import { useControls, folder } from "leva";
 import { Object3D, Mesh } from "three";
@@ -25,35 +31,68 @@ export default function Table() {
 	const gameState = useGameStore((state) => state.gameState);
 	const moves = useGameStore((state) => state.moves);
 	useEffect(() => {}, []);
-	const { tablePosition, candlePosition, tableRotation } = useControls({
+	const {
+		tablePosition,
+		candlePosition,
+		tableRotation,
+		startPosition,
+		counterPosition,
+	} = useControls({
 		table: folder(
 			{
 				tablePosition: {
-					value: [0, -3, 0],
+					value: [2.1, -1.8, -2.2],
 					step: 0.1,
 				},
 				candlePosition: {
-					value: [-2.6, 1, 2.2],
+					value: [5.4, 2.7, -4.1],
 					step: 0.1,
 				},
 				tableRotation: {
-					value: [0, 0, 0],
+					value: [0, 1.4, 0],
+					step: 0.1,
+				},
+				startPosition: {
+					value: [-1.4, 9.3, -2.4],
+					step: 0.1,
+				},
+				counterPosition: {
+					value: [5.4, 6.4, -3.7],
 					step: 0.1,
 				},
 			},
 			{ collapsed: true }
 		),
 	});
+	const [matcapTexture] = useMatcapTexture("7B5254_E9DCC7_B19986_C8AC91", 256);
+	const titleRef = useRef<Mesh>(null!);
 	return (
 		<>
 			{gameState === "START" && (
 				<>
+					<Float floatIntensity={0.75} rotationIntensity={0.25}>
+						<Text3D
+							font='/fonts/doto.json'
+							position={[-1, 9, -2.4]}
+							size={0.75}
+							height={0.2}
+							curveSegments={12}
+							bevelEnabled
+							bevelThickness={0.02}
+							bevelSize={0.02}
+							bevelOffset={0}
+							bevelSegments={5}
+							ref={titleRef}>
+							<meshMatcapMaterial matcap={matcapTexture} />
+							Hello Doto
+						</Text3D>
+					</Float>
 					<Float floatIntensity={0.25} rotationIntensity={0.25}>
 						<Text
 							scale={1}
-							position={[1.75, 3.2, 0]}
+							position={startPosition}
 							rotation-y={0.25}
-							color='lime'
+							color='black'
 							maxWidth={0.25}>
 							Start
 						</Text>
@@ -76,7 +115,7 @@ export default function Table() {
 			<Float floatIntensity={0.25} rotationIntensity={0.25}>
 				<Text
 					scale={1}
-					position={[-1.75, 3.2, 0]}
+					position={counterPosition}
 					rotation-y={0.25}
 					color='orange'
 					maxWidth={0.25}>
