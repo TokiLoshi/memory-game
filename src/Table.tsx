@@ -1,7 +1,6 @@
 import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { useLoader } from "@react-three/fiber";
 import { useEffect, useRef } from "react";
-import { useControls, folder } from "leva";
 import { Object3D, Mesh } from "three";
 
 export default function Table() {
@@ -34,33 +33,12 @@ export default function Table() {
 		}
 	}, []);
 
-	// Leva Controls
-	const { tablePosition, candlePosition, tableRotation } = useControls({
-		table: folder(
-			{
-				tablePosition: {
-					value: [2.1, -1.8, -2.2],
-					step: 0.1,
-				},
-				candlePosition: {
-					value: [5.4, 2.7, -0.6],
-					step: 0.1,
-				},
-				tableRotation: {
-					value: [0, 1.4, 0],
-					step: 0.1,
-				},
-			},
-			{ collapsed: true }
-		),
-	});
-
 	return (
 		<>
 			<primitive
 				object={candle.scene}
 				ref={candleRef}
-				position={candlePosition}
+				position={[5.4, 2.7, -0.6]}
 				scale={1}
 				castShadow
 				receiveShadow
@@ -68,9 +46,9 @@ export default function Table() {
 			<primitive
 				object={table.scene}
 				ref={tableRef}
-				position={tablePosition}
+				position={[2.1, -1.8, -2.2]}
 				scale={5}
-				rotation={tableRotation}
+				rotation={[0, 1.4, 0]}
 				castShadow
 				receiveShadow
 			/>

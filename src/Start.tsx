@@ -3,7 +3,6 @@ import { useGameStore } from "./Gamestore";
 import { Mesh, TextureLoader } from "three";
 import { Float, Text3D, useMatcapTexture } from "@react-three/drei";
 import { useRef } from "react";
-import { folder, useControls } from "leva";
 
 export default function Start() {
 	const startGame = useGameStore((state) => state.startGame);
@@ -21,17 +20,6 @@ export default function Start() {
 		startGame();
 	};
 
-	const { startPosition } = useControls({
-		start: folder(
-			{
-				startPosition: {
-					value: [0, 4.7, -0.7],
-					step: 0.1,
-				},
-			},
-			{ collapsed: true }
-		),
-	});
 	return (
 		<>
 			<Float floatIntensity={0.75} rotationIntensity={0.25}>
@@ -56,7 +44,7 @@ export default function Start() {
 				</Text3D>
 				<Text3D
 					font='/fonts/doto.json'
-					position={startPosition}
+					position={[0, 4.7, -0.7]}
 					size={0.75}
 					height={0.2}
 					curveSegments={12}

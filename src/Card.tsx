@@ -1,7 +1,6 @@
 import { TextureLoader, DoubleSide } from "three";
 import { useLoader } from "@react-three/fiber";
 import { useSpring, animated } from "@react-spring/three";
-import { useControls } from "leva";
 
 interface CardProps {
 	frontTexture: string;
@@ -24,23 +23,13 @@ export default function Card({
 	const front = useLoader(TextureLoader, frontTexture);
 	const back = useLoader(TextureLoader, backTexture);
 
-	const { flipDuration } = useControls({
-		flipDuration: {
-			value: 1.5,
-			min: 0.5,
-			max: 3,
-			step: 0.1,
-		},
-	});
-	console.log(`Flip duration: ${flipDuration}`);
-
 	const { rotation } = useSpring({
 		rotation: flippable ? [0, Math.PI, 0] : [0, 0, 0],
 		config: {
 			mass: 1,
 			tension: 180,
 			friction: 12,
-			duration: flipDuration * 1000,
+			duration: 1.5 * 1000,
 		},
 	});
 	return (

@@ -1,7 +1,6 @@
-import { useControls, folder } from "leva";
 import Experience from "./Experience";
 import "./style.css";
-import { Canvas, useLoader } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import {
 	OrbitControls,
 	Environment,
@@ -12,81 +11,21 @@ import { useGameStore } from "./Gamestore";
 import EndScene from "./End";
 import Start from "./Start";
 import { Suspense } from "react";
-import { TextureLoader } from "three";
-import { GLTFLoader } from "three/examples/jsm/Addons.js";
 import { LoadingScreen } from "./Loading";
-
-function AssetPreloader() {
-	useLoader(TextureLoader, "./materials/back.jpg");
-	useLoader(GLTFLoader, "./models/table.glb");
-	useLoader(GLTFLoader, "./models/candle.gltf");
-}
+import { Perf } from "r3f-perf";
 
 export default function Game() {
-	AssetPreloader();
-	const {
-		cameraPosition,
-		cameraTarget,
-		fov,
-		ambientLight,
-		directionalLight,
-		level,
-	} = useControls({
-		camera: folder(
-			{
-				cameraPosition: {
-					value: [0.1, 4.5, 3.1],
-					step: 0.1,
-				},
-				cameraTarget: {
-					value: [0.1, 4.5, 3.1],
-					step: 0.1,
-				},
-				fov: {
-					value: 75,
-					min: 30,
-					max: 90,
-				},
-			},
-			{ collapsed: true }
-		),
-
-		lighting: folder(
-			{
-				ambientLight: {
-					value: 0.5,
-					min: 0.1,
-					max: 5,
-					step: 0.1,
-				},
-				directionalLight: {
-					value: [10, 10, 10],
-				},
-			},
-			{ collapsed: true }
-		),
-		game: folder(
-			{
-				level: {
-					value: 16,
-					min: 4,
-					max: 16,
-					step: 1,
-				},
-			},
-			{ collapsed: true }
-		),
-	});
 	const gameState = useGameStore((state) => state.gameState);
 
 	return (
 		<Canvas shadows>
 			<Suspense fallback={<LoadingScreen />}>
+				<Perf position='top-left' />
 				<PerspectiveCamera
-					fov={fov}
+					fov={75}
 					near={0.1}
 					far={300}
-					position={cameraPosition}
+					position={[0.1, 4.5, 3.1]}
 				/>
 				<Environment
 					files='./envMaps/library.jpg'
@@ -104,12 +43,12 @@ export default function Game() {
 					maxDistance={20}
 					minPolarAngle={Math.PI / 4}
 					maxPolarAngle={Math.PI / 2}
-					target={cameraTarget}
+					target={[0.1, 4.5, 3.1]}
 					dampingFactor={0.05}
 				/>
-				<ambientLight intensity={ambientLight} />
+				<ambientLight intensity={0.5} />
 				<directionalLight
-					position={directionalLight}
+					position={[10, 10, 10]}
 					intensity={1}
 					castShadow
 					shadow-mapSize={[512, 512]}
@@ -120,7 +59,7 @@ export default function Game() {
 					<shadowMaterial transparent opacity={0.4} />
 				</mesh>
 				{gameState === "START" && <Start />}
-				{gameState === "PLAYING" && <Experience level={level} />}
+				{gameState === "PLAYING" && <Experience level={16} />}
 				{gameState === "GAME_OVER" && <EndScene />}
 			</Suspense>
 		</Canvas>
