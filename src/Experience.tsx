@@ -1,10 +1,10 @@
-import "./style.css";
 import Card from "./Card";
 import { v4 as uuid4 } from "uuid";
 import { useState, useEffect, useRef } from "react";
 import { useGameStore } from "./Gamestore";
 import { Float, Text3D, useMatcapTexture } from "@react-three/drei";
 import { Mesh } from "three";
+import "./style.css";
 
 interface Card {
 	id: string;

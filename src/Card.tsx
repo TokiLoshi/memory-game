@@ -2,7 +2,6 @@ import { TextureLoader, DoubleSide } from "three";
 import { useLoader } from "@react-three/fiber";
 import { useSpring, animated } from "@react-spring/three";
 import { useControls } from "leva";
-// import { PivotControls } from "@react-three/drei";
 
 interface CardProps {
 	frontTexture: string;
@@ -11,6 +10,7 @@ interface CardProps {
 	onClick: () => void;
 	position: [number, number, number];
 	showFront: boolean;
+	isSelected?: boolean;
 }
 
 export default function Card({
