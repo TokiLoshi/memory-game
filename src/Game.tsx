@@ -7,7 +7,10 @@ import { SceneWrapper } from "./SceneWrapper";
 
 export default function Game() {
 	return (
-		<Canvas shadows frameloop='demand'>
+		<Canvas
+			shadows
+			// frameloop='demand'
+		>
 			<Suspense fallback={<LoadingScreen />}>
 				<Perf position='top-left' />
 				<SceneWrapper />

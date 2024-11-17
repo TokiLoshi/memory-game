@@ -1,10 +1,10 @@
-import { TextureLoader, DoubleSide } from "three";
+import { TextureLoader, DoubleSide, Texture } from "three";
 import { useLoader } from "@react-three/fiber";
 import { useSpring, animated } from "@react-spring/three";
 
 interface CardProps {
 	frontTexture: string;
-	backTexture: string;
+	backTexture: Texture;
 	flippable: boolean;
 	onClick: () => void;
 	position: [number, number, number];
@@ -21,7 +21,6 @@ export default function Card({
 	position,
 }: CardProps) {
 	const front = useLoader(TextureLoader, frontTexture);
-	const back = useLoader(TextureLoader, backTexture);
 
 	const { rotation } = useSpring({
 		rotation: flippable ? [0, Math.PI, 0] : [0, 0, 0],
@@ -39,7 +38,10 @@ export default function Card({
 			position={position}
 			onClick={onClick}>
 			<boxGeometry args={[1, 1.5, 0.01]} />
-			<meshStandardMaterial side={DoubleSide} map={showFront ? front : back} />
+			<meshStandardMaterial
+				side={DoubleSide}
+				map={showFront ? front : backTexture}
+			/>
 		</animated.mesh>
 	);
 }

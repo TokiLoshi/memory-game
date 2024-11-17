@@ -1,9 +1,14 @@
-import { Float, Text3D, useMatcapTexture } from "@react-three/drei";
+import { Float, Text3D } from "@react-three/drei";
 import { useGameStore } from "./Gamestore";
+import { Texture } from "three";
 
-export default function EndScene() {
-	const [matcapTexture] = useMatcapTexture("3E2335_D36A1B_8E4A2E_2842A5", 256);
-	const [matcapTexture2] = useMatcapTexture("4F4C45_A7AEAA_7A8575_9D97A2");
+type EndProps = {
+	material1: Texture;
+	material2: Texture;
+	font: string;
+};
+
+export default function EndScene({ material1, material2, font }: EndProps) {
 	const moves = useGameStore((state) => state.moves);
 	const reset = useGameStore((state) => state.resetGame);
 
@@ -16,7 +21,7 @@ export default function EndScene() {
 		<>
 			<Float floatIntensity={0.25} rotationIntensity={0.25}>
 				<Text3D
-					font='/fonts/doto.json'
+					font={font}
 					size={0.75}
 					height={0.1}
 					// curveSegments={12}
@@ -26,11 +31,11 @@ export default function EndScene() {
 					bevelOffset={0}
 					bevelSegments={1}
 					position={[-0.8, 8.3, -0.7]}>
-					<meshMatcapMaterial matcap={matcapTexture2} />
+					<meshMatcapMaterial matcap={material1} />
 					GAME OVER
 				</Text3D>
 				<Text3D
-					font='/fonts/doto.json'
+					font={font}
 					size={0.5}
 					height={0.2}
 					// curveSegments={12}
@@ -40,11 +45,11 @@ export default function EndScene() {
 					bevelOffset={0}
 					bevelSegments={2}
 					position={[0, 6.3, -0.7]}>
-					<meshMatcapMaterial matcap={matcapTexture2} />
+					<meshMatcapMaterial matcap={material2} />
 					{moves} guesses
 				</Text3D>
 				<Text3D
-					font='/fonts/doto.json'
+					font={font}
 					size={0.5}
 					height={0.2}
 					// curveSegments={12}
@@ -55,7 +60,7 @@ export default function EndScene() {
 					bevelSegments={2}
 					onClick={handleReset}
 					position={[0, 3.8, -0.2]}>
-					<meshMatcapMaterial matcap={matcapTexture} />
+					<meshMatcapMaterial matcap={material2} />
 					Reset
 				</Text3D>
 			</Float>

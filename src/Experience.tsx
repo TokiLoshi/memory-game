@@ -1,10 +1,11 @@
 import Card from "./Card";
-import { v4 as uuid4 } from "uuid";
-import { useState, useEffect, useRef } from "react";
+
+import { useState, useEffect, useRef, useMemo, useCallback } from "react";
 import { useGameStore } from "./Gamestore";
-import { Float, Text3D, useMatcapTexture } from "@react-three/drei";
-import { Mesh } from "three";
+import { Float, Text3D } from "@react-three/drei";
+import { Mesh, Texture } from "three";
 import "./style.css";
+import { calculateGrid, shuffleCards } from "./utils";
 
 interface Card {
 	id: string;
@@ -13,6 +14,13 @@ interface Card {
 	isMatched: boolean;
 	showFront: boolean;
 }
+
+type ExperienceProps = {
+	texture: Texture;
+	level: number | undefined;
+	font: string;
+	backTexture: Texture;
+};
 
 const frontTexturePaths = [
 	"./materials/1.jpg",
@@ -33,124 +41,88 @@ const frontTexturePaths = [
 	"./materials/16.jpg",
 ];
 
-const calculateGrid = (
-	index: number,
-	gridSize: number,
-	spacing: number
-): [number, number, number] => {
-	const row = Math.floor(index / gridSize);
-	const col = index % gridSize;
+const FLIP_DURATION = 1500;
+const CARD_MARGIN = 1.8;
 
-	const gridOffset = ((gridSize - 1) * spacing) / 2;
-	const tableX = 1.4;
-	const tableY = -1.8 + 8;
-
-	const x = tableX + col * spacing - gridOffset;
-	const y = tableY + (row * spacing - gridOffset);
-	const z = -2.2;
-	return [x, y, z];
-};
-
-// Shuffle code using Fisher-yates: https://javascript.plainenglish.io/building-a-card-memory-game-in-react-e6400b226b8f
-const swap = (cards: Card[], i: number, j: number) => {
-	const temp = cards[i];
-	cards[i] = cards[j];
-	cards[j] = temp;
-};
-
-const shuffleCards = (level: number, frontTexturePaths: string[]): Card[] => {
-	const cards: Card[] = Array.from({ length: level / 2 }, (_, index) => {
-		const texture = frontTexturePaths[index % frontTexturePaths.length];
-		return [
-			{
-				id: uuid4(),
-				frontTexture: texture,
-				flippable: false,
-				isMatched: false,
-				showFront: false,
-			},
-
-			{
-				id: uuid4(),
-				frontTexture: texture,
-				flippable: false,
-				isMatched: false,
-				showFront: false,
-			},
-		];
-	}).flat();
-
-	for (let i = cards.length - 1; i > 0; i--) {
-		const randomIndex = Math.floor(Math.random() * (i + 1));
-		swap(cards, i, randomIndex);
-	}
-
-	return cards;
-};
-
-function Experience({ level = 16 }) {
+function Experience({
+	level = 16,
+	texture,
+	font,
+	backTexture,
+}: ExperienceProps) {
 	// Set grid size based on user selected level
 	const gridSize = Math.sqrt(level);
-	const cardMargin = 1.8;
-	const backTexture = "./materials/back.jpg";
-
-	const flipDuration = 1500;
 
 	// Set Card Properties
-	const [cards, setCards] = useState(shuffleCards(level, frontTexturePaths));
+	const [cards, setCards] = useState(() =>
+		shuffleCards(level, frontTexturePaths)
+	);
 	const [firstCard, setFirstCard] = useState<Card | null>();
 	const [secondCard, setSecondCard] = useState<Card | null>();
 	const [isProcessing, setIsProcessing] = useState(false);
 	const [score, setScore] = useState(0);
 
 	// Game state
-	const gameState = useGameStore((state) => state.gameState);
-	console.log("State in experience: ", gameState);
 	const moves = useGameStore((state) => state.moves);
 	const incrementMoves = useGameStore((state) => state.incrementMoves);
 	const endGame = useGameStore((state) => state.endGame);
 
-	const handleCardClick = (clickedCard: Card) => {
-		if (
-			isProcessing ||
-			clickedCard.isMatched ||
-			clickedCard.flippable ||
-			(firstCard && secondCard) ||
-			firstCard?.id === clickedCard.id
-		) {
-			return;
-		}
+	const cardPositions = useMemo(
+		() =>
+			Array.from({ length: level }, (_, index) =>
+				calculateGrid(index, gridSize, CARD_MARGIN)
+			),
+		[level, gridSize]
+	);
 
-		console.log(`Moves: ${moves}`);
+	const handleCardClick = useCallback(
+		(clickedCard: Card) => {
+			if (
+				isProcessing ||
+				clickedCard.isMatched ||
+				clickedCard.flippable ||
+				(firstCard && secondCard) ||
+				firstCard?.id === clickedCard.id
+			) {
+				return;
+			}
 
-		setCards((prevCards) =>
-			prevCards.map((card) =>
-				card.id == clickedCard.id ? { ...card, flippable: true } : card
-			)
-		);
-
-		// Show front side midway through the flip
-		setTimeout(() => {
 			setCards((prevCards) =>
 				prevCards.map((card) =>
-					card.id === clickedCard.id ? { ...card, showFront: true } : card
+					card.id == clickedCard.id ? { ...card, flippable: true } : card
 				)
 			);
-		}, flipDuration / 2);
 
-		if (!firstCard) {
-			setFirstCard(clickedCard);
-		} else {
-			setSecondCard(clickedCard);
-		}
-	};
+			// Show front side midway through the flip
+			setTimeout(() => {
+				setCards((prevCards) =>
+					prevCards.map((card) =>
+						card.id === clickedCard.id ? { ...card, showFront: true } : card
+					)
+				);
+			}, FLIP_DURATION / 2);
+
+			if (!firstCard) {
+				setFirstCard(clickedCard);
+			} else {
+				setSecondCard(clickedCard);
+			}
+		},
+		[firstCard, secondCard, isProcessing]
+	);
+
+	const resetCards = useCallback(() => {
+		setFirstCard(null);
+		setSecondCard(null);
+		setIsProcessing(false);
+	}, []);
 
 	useEffect(() => {
 		if (firstCard && secondCard) {
 			setIsProcessing(true);
 			incrementMoves();
+
 			if (firstCard.frontTexture === secondCard.frontTexture) {
-				console.log("match Found");
 				setCards((prevCards) =>
 					prevCards.map((card) =>
 						card.id === firstCard.id || card.id === secondCard.id
@@ -161,8 +133,7 @@ function Experience({ level = 16 }) {
 				setScore((prev) => prev + 1);
 				resetCards();
 			} else {
-				console.log("Not matchy matchy");
-				setTimeout(() => {
+				const flipTimeout = setTimeout(() => {
 					setCards((prevCards) =>
 						prevCards.map((card) =>
 							card.id === firstCard.id || card.id === secondCard.id
@@ -171,7 +142,7 @@ function Experience({ level = 16 }) {
 						)
 					);
 					// Hide front texture halfway through
-					setTimeout(() => {
+					const textureTimeout = setTimeout(() => {
 						setCards((prevCards) =>
 							prevCards.map((card) =>
 								card.id === firstCard.id || card.id === secondCard.id
@@ -179,63 +150,56 @@ function Experience({ level = 16 }) {
 									: card
 							)
 						);
-					}, flipDuration / 2);
+					}, FLIP_DURATION / 2);
+
 					resetCards();
-				}, flipDuration + 500);
+					return () => clearTimeout(textureTimeout);
+				}, FLIP_DURATION + 500);
+				return () => clearTimeout(flipTimeout);
 			}
 		}
-	}, [firstCard, secondCard, incrementMoves]);
+	}, [firstCard, secondCard, incrementMoves, resetCards]);
 
-	const resetCards = () => {
-		console.log("Resetting cards");
-		setFirstCard(null);
-		setSecondCard(null);
-		setIsProcessing(false);
-	};
 	useEffect(() => {
 		if (score === level / 2) {
-			console.log("Game complete");
 			endGame();
 		}
-	}, [score, level, moves, endGame]);
+	}, [score, level, endGame]);
 	const countRef = useRef<Mesh>(null!);
-	const [matcapTexture] = useMatcapTexture("586A51_CCD5AA_8C9675_8DBBB7", 256);
 
 	return (
 		<>
-			{gameState == "PLAYING" && (
-				<Float floatIntensity={0.25} rotationIntensity={0.25}>
-					<Text3D
-						font='/fonts/doto.json'
-						size={0.5}
-						height={0.1}
-						// curveSegments={12}
-						bevelEnabled
-						bevelThickness={0.01}
-						bevelSize={0.02}
-						bevelOffset={0}
-						bevelSegments={1}
-						position={[4.2, 7.3, -0.7]}
-						ref={countRef}>
-						<meshMatcapMaterial matcap={matcapTexture} /># Guess:
-					</Text3D>
-					<Text3D
-						font='/fonts/doto.json'
-						size={0.75}
-						height={0.2}
-						// curveSegments={12}
-						bevelEnabled
-						bevelThickness={0.02}
-						bevelSize={0.02}
-						bevelOffset={0}
-						bevelSegments={1}
-						position={[5, 6.3, -0.7]}
-						ref={countRef}>
-						<meshMatcapMaterial matcap={matcapTexture} />
-						{moves}
-					</Text3D>
-				</Float>
-			)}
+			<Float floatIntensity={0.25} rotationIntensity={0.25}>
+				<Text3D
+					font={font}
+					size={0.5}
+					height={0.1}
+					// curveSegments={12}
+					bevelEnabled
+					bevelThickness={0.01}
+					bevelSize={0.02}
+					bevelOffset={0}
+					bevelSegments={1}
+					position={[4.2, 7.3, -0.7]}
+					ref={countRef}>
+					<meshMatcapMaterial matcap={texture} /># Guess:
+				</Text3D>
+				<Text3D
+					font={font}
+					size={0.75}
+					height={0.2}
+					// curveSegments={12}
+					bevelEnabled
+					bevelThickness={0.02}
+					bevelSize={0.02}
+					bevelOffset={0}
+					bevelSegments={1}
+					position={[5, 6.3, -0.7]}
+					ref={countRef}>
+					<meshMatcapMaterial matcap={texture} />
+					{moves}
+				</Text3D>
+			</Float>
 
 			{cards.map((card, index) => (
 				<Card
@@ -245,7 +209,7 @@ function Experience({ level = 16 }) {
 					flippable={card.flippable}
 					backTexture={backTexture}
 					showFront={card.showFront}
-					position={calculateGrid(index, gridSize, cardMargin)}
+					position={cardPositions[index]}
 					// index={index}
 				/>
 			))}
