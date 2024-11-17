@@ -3,7 +3,7 @@ import Card from "./Card";
 import { v4 as uuid4 } from "uuid";
 import { useState, useEffect, useRef } from "react";
 import { useGameStore } from "./Gamestore";
-import { Float, Grid, Text3D, useMatcapTexture } from "@react-three/drei";
+import { Float, Text3D, useMatcapTexture } from "@react-three/drei";
 import { Mesh } from "three";
 
 interface Card {
@@ -237,19 +237,6 @@ function Experience({ level = 16 }) {
 					</Text3D>
 				</Float>
 			)}
-			<Grid
-				args={[20, 20]}
-				cellSize={1}
-				cellThickness={1}
-				cellColor='#6f6f6f'
-				sectionSize={3}
-				sectionThickness={1.5}
-				sectionColor='#9d4b3b'
-				fadeDistance={30}
-				fadeStrength={1}
-				followCamera={false}
-				infiniteGrid={true}
-			/>
 
 			{cards.map((card, index) => (
 				<Card

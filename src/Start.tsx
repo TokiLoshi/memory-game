@@ -25,7 +25,7 @@ export default function Start() {
 		start: folder(
 			{
 				startPosition: {
-					value: [0, 6.3, -0.7],
+					value: [0, 4.7, -0.7],
 					step: 0.1,
 				},
 			},
@@ -49,6 +49,7 @@ export default function Start() {
 					onPointerOver={() => (document.body.style.cursor = "grab")}
 					onPointerOut={() => (document.body.style.cursor = "default")}
 					onClick={handleStart}
+					castShadow
 					ref={titleRef}>
 					<meshMatcapMaterial matcap={matcapTexture} />
 					Memory Game
@@ -64,6 +65,7 @@ export default function Start() {
 					bevelSize={0.02}
 					bevelOffset={0}
 					bevelSegments={5}
+					castShadow
 					onClick={handleStart}
 					onPointerOver={() => (document.body.style.cursor = "grab")}
 					onPointerOut={() => (document.body.style.cursor = "default")}

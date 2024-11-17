@@ -103,9 +103,13 @@ export default function Game() {
 				castShadow
 				shadow-mapSize={[512, 512]}
 			/>
+			<Table />
+			<mesh rotation-x={-Math.PI * 0.5} position-y={-0.001} receiveShadow>
+				<planeGeometry args={[50, 50]} />
+				<shadowMaterial transparent opacity={0.4} />
+			</mesh>
 			{gameState === "START" && <Start />}
 			{gameState === "PLAYING" && <Experience level={level} />}
-			<Table />
 			{gameState === "GAME_OVER" && <EndScene />}
 		</Canvas>
 	);

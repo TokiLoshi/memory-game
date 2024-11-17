@@ -7,17 +7,17 @@ Images were generated with AI On Canva.
 TODO:
 Reduce size of blockade labs env map
 
-1. - [ ] _Start Screen and Game Flow_
+1. - [x] _Start Screen and Game Flow_
    - [x] Create closed deck on table
    - [x] Implement start button functionality
    - [x] Hide deck, show Experience component
-2. - [ ] _Game mechanics Polish_
+2. - [x] _Game mechanics Polish_
    - [x] Fix move counter to count pairs of individual cards
    - [x] Add game over state with congratulations
    - [x] Implement reset functionality
    - [x] Fix all Typescript errors
 3. - [ ] _Visual Polish (Quick Wins)_
-   - [ ] Fix card color
+   - [x] Fix card color
    - [ ] Add shadows to cards
    - [ ] Add shadow to candle
 

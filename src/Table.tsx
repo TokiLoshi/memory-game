@@ -14,17 +14,25 @@ export default function Table() {
 	const candle = useLoader(GLTFLoader, "./models/candle.gltf");
 
 	// Add shadows to the models
-	const traverseCandle = (object: Object3D) => {
+	const traverseObject = (object: Object3D) => {
 		if (object instanceof Mesh) {
 			object.castShadow = true;
+			object.receiveShadow = true;
 		}
 		if (object.children && object.children.length > 0) {
-			object.children.forEach((child) => traverseCandle(child));
+			object.children.forEach((child) => traverseObject(child));
 		}
 	};
-	traverseCandle(candle.scene);
 
-	useEffect(() => {}, []);
+	// Apply shadows when models are loaded
+	useEffect(() => {
+		if (table.scene) {
+			traverseObject(table.scene);
+		}
+		if (candle.scene) {
+			traverseObject(candle.scene);
+		}
+	}, []);
 
 	// Leva Controls
 	const { tablePosition, candlePosition, tableRotation } = useControls({
@@ -54,6 +62,8 @@ export default function Table() {
 				ref={candleRef}
 				position={candlePosition}
 				scale={1}
+				castShadow
+				receiveShadow
 			/>
 			<primitive
 				object={table.scene}
@@ -61,6 +71,8 @@ export default function Table() {
 				position={tablePosition}
 				scale={5}
 				rotation={tableRotation}
+				castShadow
+				receiveShadow
 			/>
 		</>
 	);

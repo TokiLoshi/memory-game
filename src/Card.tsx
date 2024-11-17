@@ -45,6 +45,7 @@ export default function Card({
 	});
 	return (
 		<animated.mesh
+			castShadow
 			rotation={rotation as unknown as [number, number, number]}
 			position={position}
 			onClick={onClick}>
