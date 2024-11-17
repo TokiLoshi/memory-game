@@ -209,16 +209,15 @@ function Experience({ level = 16 }) {
 						font='/fonts/doto.json'
 						size={0.5}
 						height={0.1}
-						// curveSegments={12}
+						curveSegments={12}
 						bevelEnabled
 						bevelThickness={0.01}
 						bevelSize={0.02}
 						bevelOffset={0}
-						bevelSegments={2}
-						position={[4.3, 7.3, -0.7]}
+						bevelSegments={3}
+						position={[4.2, 7.3, -0.7]}
 						ref={countRef}>
-						<meshMatcapMaterial matcap={matcapTexture} />
-						Guess#:
+						<meshMatcapMaterial matcap={matcapTexture} /># Guess:
 					</Text3D>
 					<Text3D
 						font='/fonts/doto.json'
