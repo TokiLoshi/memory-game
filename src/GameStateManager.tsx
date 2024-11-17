@@ -19,6 +19,10 @@ interface AssetLoaderProps {
 	children: (assets: GameAssets) => ReactNode;
 }
 
+interface GameStateContentProps {
+	assets: GameAssets;
+}
+
 function AssetLoader({ children }: AssetLoaderProps) {
 	const [greenMatcapMaterial] = useMatcapTexture(
 		"586A51_CCD5AA_8C9675_8DBBB7",
@@ -41,11 +45,7 @@ function AssetLoader({ children }: AssetLoaderProps) {
 		}),
 		[greenMatcapMaterial, silverMatcapTexture, redMatcapTexture, deckTexture]
 	);
-	return children(assets);
-}
-
-interface GameStateContentProps {
-	assets: GameAssets;
+	return <>{children(assets)}</>;
 }
 
 function GameStateContent({ assets }: GameStateContentProps) {
