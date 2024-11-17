@@ -1,10 +1,10 @@
 import "./style.css";
 import Card from "./Card";
 import { v4 as uuid4 } from "uuid";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { useGameStore } from "./Gamestore";
-import { Grid } from "@react-three/drei";
-import { useControls } from "leva";
+import { Float, Grid, Text3D, useMatcapTexture } from "@react-three/drei";
+import { Mesh } from "three";
 
 interface Card {
 	id: string;
@@ -12,15 +12,6 @@ interface Card {
 	flippable: boolean;
 	isMatched: boolean;
 	showFront: boolean;
-}
-
-type GameState = "START" | "PLAYING" | "GAME_OVER";
-
-type shuffledCards = Array<Card>;
-
-interface ExperienceProps {
-	level?: number;
-	cardMargin?: number;
 }
 
 const frontTexturePaths = [
@@ -76,6 +67,7 @@ const shuffleCards = (level: number, frontTexturePaths: string[]): Card[] => {
 				frontTexture: texture,
 				flippable: false,
 				isMatched: false,
+				showFront: false,
 			},
 
 			{
@@ -95,16 +87,12 @@ const shuffleCards = (level: number, frontTexturePaths: string[]): Card[] => {
 	return cards;
 };
 
-const checkForMatch = (first: Card, second: Card): boolean => {
-	return first.frontTexture === second.frontTexture;
-};
-
 function Experience({ level = 16 }) {
 	// Set grid size based on user selected level
 	const gridSize = Math.sqrt(level);
 	const cardMargin = 1.8;
 	const backTexture = "./materials/back.jpg";
-	const gameState = useGameStore((state) => state.gameState);
+
 	const flipDuration = 1500;
 
 	// Set Card Properties
@@ -113,7 +101,13 @@ function Experience({ level = 16 }) {
 	const [secondCard, setSecondCard] = useState<Card | null>();
 	const [isProcessing, setIsProcessing] = useState(false);
 	const [score, setScore] = useState(0);
-	const [moves, setMoves] = useState(0);
+
+	// Game state
+	const gameState = useGameStore((state) => state.gameState);
+	console.log("State in experience: ", gameState);
+	const moves = useGameStore((state) => state.moves);
+	const incrementMoves = useGameStore((state) => state.incrementMoves);
+	const endGame = useGameStore((state) => state.endGame);
 
 	const handleCardClick = (clickedCard: Card) => {
 		if (
@@ -126,7 +120,6 @@ function Experience({ level = 16 }) {
 			return;
 		}
 
-		setMoves(moves + 1);
 		console.log(`Moves: ${moves}`);
 
 		setCards((prevCards) =>
@@ -154,7 +147,7 @@ function Experience({ level = 16 }) {
 	useEffect(() => {
 		if (firstCard && secondCard) {
 			setIsProcessing(true);
-
+			incrementMoves();
 			if (firstCard.frontTexture === secondCard.frontTexture) {
 				console.log("match Found");
 				setCards((prevCards) =>
@@ -190,7 +183,7 @@ function Experience({ level = 16 }) {
 				}, flipDuration + 500);
 			}
 		}
-	}, [firstCard, secondCard]);
+	}, [firstCard, secondCard, incrementMoves]);
 
 	const resetCards = () => {
 		console.log("Resetting cards");
@@ -201,11 +194,48 @@ function Experience({ level = 16 }) {
 	useEffect(() => {
 		if (score === level / 2) {
 			console.log("Game complete");
+			endGame();
 		}
-	}, [score, level, moves]);
+	}, [score, level, moves, endGame]);
+	const countRef = useRef<Mesh>(null!);
+	const [matcapTexture] = useMatcapTexture("586A51_CCD5AA_8C9675_8DBBB7", 256);
 
 	return (
 		<>
+			{gameState == "PLAYING" && (
+				<Float floatIntensity={0.25} rotationIntensity={0.25}>
+					<Text3D
+						font='/fonts/doto.json'
+						size={0.5}
+						height={0.1}
+						// curveSegments={12}
+						bevelEnabled
+						bevelThickness={0.01}
+						bevelSize={0.02}
+						bevelOffset={0}
+						bevelSegments={2}
+						position={[4.3, 7.3, -0.7]}
+						ref={countRef}>
+						<meshMatcapMaterial matcap={matcapTexture} />
+						Guess#:
+					</Text3D>
+					<Text3D
+						font='/fonts/doto.json'
+						size={0.75}
+						height={0.2}
+						curveSegments={12}
+						bevelEnabled
+						bevelThickness={0.02}
+						bevelSize={0.02}
+						bevelOffset={0}
+						bevelSegments={5}
+						position={[5, 6.3, -0.7]}
+						ref={countRef}>
+						<meshMatcapMaterial matcap={matcapTexture} />
+						{moves}
+					</Text3D>
+				</Float>
+			)}
 			<Grid
 				args={[20, 20]}
 				cellSize={1}
@@ -229,9 +259,7 @@ function Experience({ level = 16 }) {
 					backTexture={backTexture}
 					showFront={card.showFront}
 					position={calculateGrid(index, gridSize, cardMargin)}
-					// deckPosition={deckPosition}
-					inDeck={gameState === "GAME_OVER"}
-					index={index}
+					// index={index}
 				/>
 			))}
 		</>

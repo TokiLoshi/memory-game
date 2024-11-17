@@ -1,16 +1,16 @@
 import { useControls, folder } from "leva";
 import Experience from "./Experience";
 import "./style.css";
-import { Canvas } from "@react-three/fiber";
+import { Canvas, useLoader } from "@react-three/fiber";
 import {
 	OrbitControls,
 	Environment,
 	PerspectiveCamera,
 } from "@react-three/drei";
 import Table from "./Table";
-import { useEffect, useRef } from "react";
-import { Mesh } from "three";
-// import { PresentationControls } from "@react-three/drei";
+import { useGameStore } from "./Gamestore";
+import { TextureLoader } from "three/src/loaders/TextureLoader";
+import EndScene from "./End";
 
 export default function Game() {
 	const {
@@ -66,18 +66,20 @@ export default function Game() {
 			{ collapsed: true }
 		),
 	});
-	const cameraRef = useRef<Mesh>(null!);
-	// useEffect(() => {
-	// 	if (cameraRef.current) {
-	// 		cameraRef.current.position.set(...cameraPosition);
-	// 		cameraRef.current.lookAt(...cameraTarget);
-	// 	}
-	// });
+	const gameState = useGameStore((state) => state.gameState);
+	const startGame = useGameStore((state) => state.startGame);
+	const moves = useGameStore((state) => state.moves);
+	const deckTexture = useLoader(TextureLoader, "./materials/back.jpg");
+
+	console.log(`In game the state is ${gameState}`);
+	const handleStart = () => {
+		console.log("handle start");
+		startGame();
+	};
 
 	return (
 		<Canvas shadows>
 			<PerspectiveCamera
-				ref={cameraRef}
 				fov={fov}
 				near={0.1}
 				far={300}
@@ -109,8 +111,15 @@ export default function Game() {
 				castShadow
 				shadow-mapSize={[512, 512]}
 			/>
-			<Experience level={level} />
+			{gameState === "START" && (
+				<mesh position={[0, 2.3, -2]} onClick={handleStart}>
+					<boxGeometry args={[1, 0.04, 1.5]} />
+					<meshStandardMaterial map={deckTexture} />
+				</mesh>
+			)}
+			{gameState === "PLAYING" && <Experience level={level} />}
 			<Table />
+			{gameState === "GAME_OVER" && <EndScene />}
 		</Canvas>
 	);
 }

@@ -7,21 +7,32 @@ Images were generated with AI On Canva.
 TODO:
 Reduce size of blockade labs env map
 
-1. Add shadow from candle
-2. Add shadow from cards
-3. Map out game phases so Zustand is totally hooked up
-4. Add a restart button when game is done and total moves
-5. On start cards should be in a pile
-6. On Playing change the camera angle to look at table
-7. Configure reset game
-8. Add in env map for background
-9. Add smoke to candle for animation
-10. Make buttons look nicer
-11. Add sound effects for good matches
-12. Add sound effect for bad matches.
-13. Change leva to only display on debug route
-14. Check performances
-15. Get Feedback decide on optimizations
+1. - [ ] _Start Screen and Game Flow_
+     - [ ] Create closed deck on table
+     - [ ] Implement start button functionality
+     - [ ] Hide deck, show Experience component
+2. - [ ] _Game mechanics Polish_
+     - [ ] Fix move counter to count pairs of individual cards
+     - [ ] Add game over state with congratulations
+     - [ ] Implement reset functionality
+     - [ ] Fix all Typescript errors
+3. - [ ] _Visual Polish (Quick Wins)_
+     - [ ] Add shadows to cards
+     - [ ] Add shadow to candle
+     - [ ] Add bloom to selected cards
+     - [ ] Add loading screen
+     - [ ] Check mobile functionality
+     - [ ] Hide Leva to only show on a debug route
+     - [ ] Optimze performances
+4. - [ ] _Documentation_
+     - [ ] Update README.md
+     - [ ] Add screenshots
+     - [ ] Deploy
+     - [ ] Share for Feedback
+
+Nice to haves: 5. - [ ] _Game enhancements_ - [ ] Add difficulty levels (easy, medium, hard) - [ ] Add transition animation from start to play - [ ] Add victory animation 6. - [ ] _Atmosphere_ - [ ] Candle smoke effect - [ ] Basic postprocessing effects
+
+Extras (Futures updates): 7. - [ ] _Advanced Effects_ - [ ] Fireworks animations - [ ] Add sounds for good matches - [ ] Add sounds for bad matches
 
 Resources:
 

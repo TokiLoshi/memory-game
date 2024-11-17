@@ -12,7 +12,6 @@ export default function Table() {
 	const candleRef = useRef();
 	const titleRef = useRef<Mesh>(null!);
 	const startRef = useRef<Mesh>(null!);
-	const countRef = useRef<Mesh>(null!);
 
 	// Font Textures
 	const [matcapTexture] = useMatcapTexture("586A51_CCD5AA_8C9675_8DBBB7", 256);
@@ -34,46 +33,39 @@ export default function Table() {
 
 	// Game State
 	const gameState = useGameStore((state) => state.gameState);
-	const moves = useGameStore((state) => state.moves);
+	const startGame = useGameStore((state) => state.startGame);
+
 	useEffect(() => {}, []);
 
 	// Leva Controls
-	const {
-		tablePosition,
-		candlePosition,
-		tableRotation,
-		startPosition,
-		counterPosition,
-	} = useControls({
-		table: folder(
-			{
-				tablePosition: {
-					value: [2.1, -1.8, -2.2],
-					step: 0.1,
+	const { tablePosition, candlePosition, tableRotation, startPosition } =
+		useControls({
+			table: folder(
+				{
+					tablePosition: {
+						value: [2.1, -1.8, -2.2],
+						step: 0.1,
+					},
+					candlePosition: {
+						value: [5.4, 2.7, -0.6],
+						step: 0.1,
+					},
+					tableRotation: {
+						value: [0, 1.4, 0],
+						step: 0.1,
+					},
+					startPosition: {
+						value: [0, 6.3, -0.7],
+						step: 0.1,
+					},
 				},
-				candlePosition: {
-					value: [5.4, 2.7, -0.6],
-					step: 0.1,
-				},
-				tableRotation: {
-					value: [0, 1.4, 0],
-					step: 0.1,
-				},
-				startPosition: {
-					value: [0, 6.3, -0.7],
-					step: 0.1,
-				},
-				counterPosition: {
-					value: [5, 6.3, -0.7],
-					step: 0.1,
-				},
-			},
-			{ collapsed: true }
-		),
-	});
+				{ collapsed: true }
+			),
+		});
 
 	const handleStart = () => {
 		console.log("handle start");
+		startGame();
 	};
 
 	return (
@@ -112,6 +104,7 @@ export default function Table() {
 							bevelSize={0.02}
 							bevelOffset={0}
 							bevelSegments={5}
+							onClick={handleStart}
 							onPointerOver={() => (document.body.style.cursor = "grab")}
 							onPointerOut={() => (document.body.style.cursor = "default")}
 							ref={startRef}>
@@ -134,23 +127,6 @@ export default function Table() {
 				scale={5}
 				rotation={tableRotation}
 			/>
-			<Float floatIntensity={0.25} rotationIntensity={0.25}>
-				<Text3D
-					font='/fonts/doto.json'
-					size={0.75}
-					height={0.2}
-					curveSegments={12}
-					bevelEnabled
-					bevelThickness={0.02}
-					bevelSize={0.02}
-					bevelOffset={0}
-					bevelSegments={5}
-					ref={countRef}
-					position={counterPosition}>
-					<meshMatcapMaterial matcap={matcapTexture} />
-					{moves}
-				</Text3D>
-			</Float>
 		</>
 	);
 }
