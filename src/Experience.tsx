@@ -75,6 +75,7 @@ const shuffleCards = (level: number, frontTexturePaths: string[]): Card[] => {
 				frontTexture: texture,
 				flippable: false,
 				isMatched: false,
+				showFront: false,
 			},
 		];
 	}).flat();

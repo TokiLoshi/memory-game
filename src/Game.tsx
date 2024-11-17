@@ -1,7 +1,7 @@
 import { useControls, folder } from "leva";
 import Experience from "./Experience";
 import "./style.css";
-import { Canvas, useLoader } from "@react-three/fiber";
+import { Canvas } from "@react-three/fiber";
 import {
 	OrbitControls,
 	Environment,
@@ -9,8 +9,9 @@ import {
 } from "@react-three/drei";
 import Table from "./Table";
 import { useGameStore } from "./Gamestore";
-import { TextureLoader } from "three/src/loaders/TextureLoader";
+
 import EndScene from "./End";
+import Start from "./Start";
 
 export default function Game() {
 	const {
@@ -67,15 +68,6 @@ export default function Game() {
 		),
 	});
 	const gameState = useGameStore((state) => state.gameState);
-	const startGame = useGameStore((state) => state.startGame);
-	const moves = useGameStore((state) => state.moves);
-	const deckTexture = useLoader(TextureLoader, "./materials/back.jpg");
-
-	console.log(`In game the state is ${gameState}`);
-	const handleStart = () => {
-		console.log("handle start");
-		startGame();
-	};
 
 	return (
 		<Canvas shadows>
@@ -111,12 +103,7 @@ export default function Game() {
 				castShadow
 				shadow-mapSize={[512, 512]}
 			/>
-			{gameState === "START" && (
-				<mesh position={[0, 2.3, -2]} onClick={handleStart}>
-					<boxGeometry args={[1, 0.04, 1.5]} />
-					<meshStandardMaterial map={deckTexture} />
-				</mesh>
-			)}
+			{gameState === "START" && <Start />}
 			{gameState === "PLAYING" && <Experience level={level} />}
 			<Table />
 			{gameState === "GAME_OVER" && <EndScene />}

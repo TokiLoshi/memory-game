@@ -8,27 +8,30 @@ TODO:
 Reduce size of blockade labs env map
 
 1. - [ ] _Start Screen and Game Flow_
-     - [ ] Create closed deck on table
-     - [ ] Implement start button functionality
-     - [ ] Hide deck, show Experience component
+   - [x] Create closed deck on table
+   - [x] Implement start button functionality
+   - [x] Hide deck, show Experience component
 2. - [ ] _Game mechanics Polish_
-     - [ ] Fix move counter to count pairs of individual cards
-     - [ ] Add game over state with congratulations
-     - [ ] Implement reset functionality
-     - [ ] Fix all Typescript errors
+   - [x] Fix move counter to count pairs of individual cards
+   - [x] Add game over state with congratulations
+   - [x] Implement reset functionality
+   - [x] Fix all Typescript errors
 3. - [ ] _Visual Polish (Quick Wins)_
-     - [ ] Add shadows to cards
-     - [ ] Add shadow to candle
-     - [ ] Add bloom to selected cards
-     - [ ] Add loading screen
-     - [ ] Check mobile functionality
-     - [ ] Hide Leva to only show on a debug route
-     - [ ] Optimze performances
+   - [ ] Fix card color
+   - [ ] Add shadows to cards
+   - [ ] Add shadow to candle
+
+   - [ ] Add bloom to selected cards
+   - [ ] Add loading screen
+   - [ ] Check mobile functionality
+   - [ ] Hide Leva to only show on a debug route
+   - [ ] Optimze performances
+
 4. - [ ] _Documentation_
-     - [ ] Update README.md
-     - [ ] Add screenshots
-     - [ ] Deploy
-     - [ ] Share for Feedback
+   - [ ] Update README.md
+   - [ ] Add screenshots
+   - [ ] Deploy
+   - [ ] Share for Feedback
 
 Nice to haves: 5. - [ ] _Game enhancements_ - [ ] Add difficulty levels (easy, medium, hard) - [ ] Add transition animation from start to play - [ ] Add victory animation 6. - [ ] _Atmosphere_ - [ ] Candle smoke effect - [ ] Basic postprocessing effects
 
