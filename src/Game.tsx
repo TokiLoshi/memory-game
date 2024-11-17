@@ -39,7 +39,7 @@ export default function Game() {
 				/>
 				<OrbitControls
 					makeDefault={true}
-					minDistance={5}
+					minDistance={4}
 					maxDistance={20}
 					minPolarAngle={Math.PI / 4}
 					maxPolarAngle={Math.PI / 2}

@@ -22,18 +22,18 @@ export default function Start() {
 
 	return (
 		<>
-			<Float floatIntensity={0.75} rotationIntensity={0.25}>
+			<Float floatIntensity={0.75} rotationIntensity={0.15}>
 				<Text3D
 					font='/fonts/doto.json'
 					position={[-1, 9, -2.4]}
 					size={0.75}
 					height={0.2}
-					curveSegments={12}
+					// curveSegments={12}
 					bevelEnabled
 					bevelThickness={0.02}
 					bevelSize={0.02}
 					bevelOffset={0}
-					bevelSegments={5}
+					// bevelSegments={5}
 					onPointerOver={() => (document.body.style.cursor = "grab")}
 					onPointerOut={() => (document.body.style.cursor = "default")}
 					onClick={handleStart}
@@ -47,12 +47,12 @@ export default function Start() {
 					position={[0, 4.7, -0.7]}
 					size={0.75}
 					height={0.2}
-					curveSegments={12}
+					// curveSegments={12}
 					bevelEnabled
 					bevelThickness={0.02}
 					bevelSize={0.02}
 					bevelOffset={0}
-					bevelSegments={5}
+					// bevelSegments={5}
 					castShadow
 					onClick={handleStart}
 					onPointerOver={() => (document.body.style.cursor = "grab")}

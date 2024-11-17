@@ -41,7 +41,6 @@ export default function Table() {
 				position={[5.4, 2.7, -0.6]}
 				scale={1}
 				castShadow
-				receiveShadow
 			/>
 			<primitive
 				object={table.scene}

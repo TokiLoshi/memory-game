@@ -24,7 +24,7 @@ export default function EndScene() {
 					bevelThickness={0.01}
 					bevelSize={0.02}
 					bevelOffset={0}
-					bevelSegments={2}
+					bevelSegments={1}
 					position={[-0.8, 8.3, -0.7]}>
 					<meshMatcapMaterial matcap={matcapTexture2} />
 					GAME OVER
@@ -32,45 +32,31 @@ export default function EndScene() {
 				<Text3D
 					font='/fonts/doto.json'
 					size={0.5}
-					height={0.1}
-					// curveSegments={12}
-					bevelEnabled
-					bevelThickness={0.01}
-					bevelSize={0.02}
-					bevelOffset={0}
-					bevelSegments={2}
-					position={[-0.1, 6.8, -0.7]}>
-					<meshMatcapMaterial matcap={matcapTexture2} />
-					Solved in:
-				</Text3D>
-				<Text3D
-					font='/fonts/doto.json'
-					size={0.75}
 					height={0.2}
-					curveSegments={12}
+					// curveSegments={12}
 					bevelEnabled
 					bevelThickness={0.02}
 					bevelSize={0.02}
 					bevelOffset={0}
-					bevelSegments={5}
-					position={[-1, 5.3, -0.7]}>
+					bevelSegments={2}
+					position={[0, 6.3, -0.7]}>
 					<meshMatcapMaterial matcap={matcapTexture2} />
-					{moves} Guesses
+					{moves} guesses
 				</Text3D>
 				<Text3D
 					font='/fonts/doto.json'
 					size={0.5}
 					height={0.2}
-					curveSegments={12}
+					// curveSegments={12}
 					bevelEnabled
 					bevelThickness={0.02}
 					bevelSize={0.02}
 					bevelOffset={0}
-					bevelSegments={5}
+					bevelSegments={2}
 					onClick={handleReset}
-					position={[-0.6, 2.8, -0.2]}>
+					position={[0, 3.8, -0.2]}>
 					<meshMatcapMaterial matcap={matcapTexture} />
-					Play again
+					Reset
 				</Text3D>
 			</Float>
 		</>
