@@ -9,6 +9,7 @@ export default function Game() {
 	return (
 		<Canvas
 			shadows
+			gl={{ powerPreference: "default", antialias: false }}
 			// frameloop='demand'
 		>
 			<Suspense fallback={<LoadingScreen />}>
