@@ -29,6 +29,7 @@ Try it out: [Demo Link](https://memory-game-toki-loshi.vercel.app/)
 - [React Spring](https://www.react-spring.dev/) - Animation library
 - [TypeScript](https://www.typescriptlang.org/) - Type safety
 - [Vite](https://vitejs.dev/) - Build tool
+- [R3F-Perf](https://www.npmjs.com/package/r3f-perf) - Performance monitor
 
 ## Getting Started ⚡️
 
