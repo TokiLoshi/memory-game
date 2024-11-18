@@ -95,7 +95,7 @@ npm run dev
 
 ## Assets and Attribution 🎨
 
-![Game Session](https://github.com/TokiLoshi/memory-game/blob/main/start.png)
+![Game Session](https://github.com/TokiLoshi/memory-game/blob/main/play.png)
 
 ### Models
 
