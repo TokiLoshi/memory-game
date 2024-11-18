@@ -2,9 +2,9 @@
 
 A classic memory matching game reimagined in 3D using Three.js and React. Test your memory while enjoying an immersive, atmospheric experience.
 
-![Game Screenshot Placeholder](placeholder-for-screenshot.png)
+![Game Screenshot Placeholder](https://github.com/TokiLoshi/memory-game/blob/main/start.png)
 
-## Features
+## Features ⭐️
 
 - 3D card matching gameplay
 - Atmospheric environment with custom skybox
@@ -12,13 +12,15 @@ A classic memory matching game reimagined in 3D using Three.js and React. Test y
 - Score tracking and game state management
 - Custom AI-generated card designs
 
-## Live Demo
+![Game Session](https://github.com/TokiLoshi/memory-game/blob/main/flipped.png)
+
+## Live Demo 📸
 
 Try it out: [Demo Link](https://memory-game-toki-loshi.vercel.app/)
 
-**Note:** Currently optimized for desktop use. Mobile support is under development.
+🚧 **Warning:** Currently optimized for desktop use. Mobile support is under development. It will very likely crash the browser in Safari and Chrome.
 
-## Built With
+## Built With 🛠️
 
 - [React](https://reactjs.org/) - UI Framework
 - [Three.js](https://threejs.org/) - 3D Graphics
@@ -28,7 +30,7 @@ Try it out: [Demo Link](https://memory-game-toki-loshi.vercel.app/)
 - [TypeScript](https://www.typescriptlang.org/) - Type safety
 - [Vite](https://vitejs.dev/) - Build tool
 
-## Getting Started
+## Getting Started ⚡️
 
 ### Prerequisites
 
@@ -57,7 +59,7 @@ npm run dev
 
 ## Current Status
 
-### Working Features
+### Working Features ✅
 
 - Full 3D environment with custom lighting and shadows
 - Card matching mechanics
@@ -65,13 +67,13 @@ npm run dev
 - Atmospheric skybox (optimized JPEG version)
 - Desktop browser compatibility
 
-### Known Issues
+### Known Issues ⚠️
 
 - Mobile compatibility issues (particularly on iOS devices)
 - Large initial load time due to 3D assets
 - Performance optimization needed for weaker devices
 
-## Roadmap
+## Roadmap 🛣️
 
 1. Mobile Support
 
@@ -90,7 +92,9 @@ npm run dev
    - Add ambient sound effects
    - Implement particle effects
 
-## Assets and Attribution
+## Assets and Attribution 🎨
+
+![Game Session](https://github.com/TokiLoshi/memory-game/blob/main/start.png)
 
 ### Models
 
@@ -103,7 +107,7 @@ npm run dev
 - Card Textures: Generated with [Canva AI](https://www.canva.com)
 - [Matcaps Source](https://github.com/nidorx/matcaps/tree/master)
 
-## Implementation Notes
+## Implementation Notes 📝
 
 ### Technical Challenges
 
@@ -131,7 +135,7 @@ npm run dev
 
 This project is licensed under the MIT License - see the [LICENSE.md](LICENSE.md) file for details.
 
-# Feedback
+# Feedback 🤝
 
 This project was built as a learning exercise in React Three Fiber and 3D web development. If you have any suggestions, tips, or feedback about performance, code quality, or user experience, I'd love to hear them! Feel free to:
 
@@ -149,7 +153,7 @@ Skybox generated using [BlockadeLabs](https://skybox.blockadelabs.com)
 [Matcaps](https://github.com/nidorx/matcaps/tree/master)
 Images were generated with AI On [Canva]().
 
-Inspiration:
+# Resources and Inspiration:
 
 1. https://www.geeksforgeeks.org/build-a-flip-the-card-match-done-game-using-react/
 2. https://codesandbox.io/p/sandbox/memory-game-using-react-uyv1d?file=%2Fsrc%2Fcomponents%2FGame.js%3A44%2C14-45%2C6
