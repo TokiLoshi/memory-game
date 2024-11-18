@@ -1,8 +1,16 @@
 import { Html, useProgress } from "@react-three/drei";
+import { useEffect, useState } from "react";
 
 export function LoadingScreen() {
 	const { progress } = useProgress();
-	const progressValue = Math.round(progress);
+	const [displayProgress, setDisplayProgress] = useState(0);
+
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDisplayProgress(Math.round(progress));
+		}, 100);
+		return () => clearTimeout(timer);
+	}, [progress]);
 
 	return (
 		<>
@@ -27,7 +35,7 @@ export function LoadingScreen() {
 								color: "white",
 								marginBottom: "1rem",
 							}}>
-							Loading {progressValue}%
+							Loading {displayProgress}%
 						</h2>
 						<div
 							style={{
@@ -39,7 +47,7 @@ export function LoadingScreen() {
 							}}>
 							<div
 								style={{
-									width: `${progressValue}%`,
+									width: `${displayProgress}%`,
 									height: "100%",
 									backgroundColor: "#8DBBB7",
 									borderRadius: "4px",
@@ -51,7 +59,7 @@ export function LoadingScreen() {
 									color: "white",
 									marginTop: "0.5rem",
 								}}>
-								{progressValue}%
+								{displayProgress}%
 							</p>
 						</div>
 					</div>

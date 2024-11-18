@@ -81,13 +81,19 @@ function GameStateContent({ assets }: GameStateContentProps) {
 	);
 }
 
+function GameStateWrapper() {
+	return (
+		<AssetLoader>
+			{(assets) => <GameStateContent assets={assets} />}
+		</AssetLoader>
+	);
+}
+
 export default function GameStateManager() {
 	return (
 		<>
 			<Suspense fallback={<LoadingScreen />}>
-				<AssetLoader>
-					{(assets) => <GameStateContent assets={assets} />}
-				</AssetLoader>
+				<GameStateWrapper />
 			</Suspense>
 		</>
 	);
