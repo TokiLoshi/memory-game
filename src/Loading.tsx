@@ -1,16 +1,17 @@
 import { Html, useProgress } from "@react-three/drei";
-import { useEffect, useState } from "react";
+// import { useEffect, useState } from "react";
 
 export function LoadingScreen() {
 	const { progress } = useProgress();
-	const [displayProgress, setDisplayProgress] = useState(0);
+	// const [displayProgress, setDisplayProgress] = useState(0);
 
-	useEffect(() => {
-		const timer = setTimeout(() => {
-			setDisplayProgress(Math.round(progress));
-		}, 100);
-		return () => clearTimeout(timer);
-	}, [progress]);
+	// useEffect(() => {
+	// 	const timer = setTimeout(() => {
+	// 		setDisplayProgress(Math.round(progress));
+	// 	}, 100);
+	// 	return () => clearTimeout(timer);
+	// }, [progress]);
+	const displayProgress = Math.round(progress);
 
 	return (
 		<>
@@ -21,6 +22,7 @@ export function LoadingScreen() {
 						inset: 0,
 						display: "flex",
 						alignItems: "center",
+						justifyContent: "center",
 						backgroundColor: "rgba(0, 0, 0, 0.9)",
 						transition: "opacity 300ms ease",
 					}}>
@@ -39,7 +41,7 @@ export function LoadingScreen() {
 						</h2>
 						<div
 							style={{
-								width: "256ppx",
+								width: "256px",
 								height: "8px",
 								backgroundColor: "#333",
 								borderRadius: "4px",

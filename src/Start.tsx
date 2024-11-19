@@ -11,6 +11,9 @@ type StartProps = {
 };
 
 export default function Start({ material, font, texture }: StartProps) {
+	console.log(`Material: ${material}`);
+	console.log(`font: ${font}`);
+	console.log("texture: ", texture);
 	const startGame = useGameStore((state) => state.startGame);
 
 	// Refs

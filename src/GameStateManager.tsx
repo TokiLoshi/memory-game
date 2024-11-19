@@ -3,7 +3,7 @@ import { useMatcapTexture } from "@react-three/drei";
 import { TextureLoader, Texture } from "three";
 import { useGameStore } from "./Gamestore";
 import Start from "./Start";
-import Experience from "./Experience";
+import Experience from "./CardPlay";
 import EndScene from "./End";
 import { ReactNode, Suspense, useMemo } from "react";
 import { LoadingScreen } from "./Loading";
@@ -92,6 +92,7 @@ function GameStateWrapper() {
 export default function GameStateManager() {
 	return (
 		<>
+			{/* <Suspense fallback={<LoadingScreen />}> */}
 			<Suspense fallback={<LoadingScreen />}>
 				<GameStateWrapper />
 			</Suspense>
