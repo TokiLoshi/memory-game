@@ -21,8 +21,9 @@ export default function Experience() {
 			/>
 			<Suspense fallback={<LoadingScreen />}>
 				<Game />
+
+				<GameEnvironment />
 			</Suspense>
-			<GameEnvironment />
 		</>
 	);
 }

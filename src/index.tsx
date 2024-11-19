@@ -1,7 +1,7 @@
 import "./style.css";
 import ReactDOM from "react-dom/client";
 import { Canvas } from "@react-three/fiber";
-import { StrictMode } from "react";
+// import { StrictMode } from "react";
 import { Leva } from "leva";
 // import Game from "./Game";
 import Experience from "./Experience";
@@ -10,7 +10,7 @@ import { PerspectiveCamera } from "@react-three/drei";
 const root = ReactDOM.createRoot(document.querySelector("#root")!);
 
 root.render(
-	<StrictMode>
+	<>
 		<Leva hidden={location.hash !== "#debug"} />
 
 		<Canvas
@@ -27,5 +27,5 @@ root.render(
 			/>
 			<Experience />
 		</Canvas>
-	</StrictMode>
+	</>
 );
