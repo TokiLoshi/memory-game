@@ -48,7 +48,7 @@ export default function Start({ material, font, texture }: StartProps) {
 					Memory Game
 				</Text3D>
 				<Text3D
-					font='/fonts/doto.json'
+					font={font}
 					position={[0, 4.7, -0.7]}
 					size={0.75}
 					height={0.2}

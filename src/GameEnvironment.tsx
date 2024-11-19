@@ -14,15 +14,24 @@ export default function GameEnvironment() {
 				shadow-mapSize={[512, 512]}
 			/>
 			<Environment
-				files='./envMaps/library.jpg'
+				// files='./envMaps/library.jpg'
+				files={[
+					"./envMaps/cubeMaps/px.png",
+					"./envMaps/cubeMaps/nx.png",
+					"./envMaps/cubeMaps/py.png",
+					"./envMaps/cubeMaps/ny.png",
+					"./envMaps/cubeMaps/pz.png",
+					"./envMaps/cubeMaps/nz.png",
+				]}
+				// files={"./envMaps/StandardCubeMap.png"}
 				background
 				ground={{
 					height: 7,
 					radius: 28,
 					scale: 100,
 				}}
-				resolution={256}
-				preset={undefined}
+				resolution={256} //
+				// preset='warehouse'
 			/>
 			<mesh rotation-x={-Math.PI * 0.5} position-y={-0.001} receiveShadow>
 				<planeGeometry args={[50, 50]} />
