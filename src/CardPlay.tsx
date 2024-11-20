@@ -161,7 +161,10 @@ export default function CardPlay({
 
 	useEffect(() => {
 		if (score === level / 2) {
-			endGame();
+			const endTimeout = setTimeout(() => {
+				endGame();
+			}, 2000);
+			return () => clearTimeout(endTimeout);
 		}
 	}, [score, level, endGame]);
 	const countRef = useRef<Mesh>(null!);

@@ -57,6 +57,8 @@ export default function EndScene({ material1, material2, font }: EndProps) {
 					bevelSize={0.02}
 					bevelOffset={0}
 					bevelSegments={2}
+					onPointerOver={() => (document.body.style.cursor = "grab")}
+					onPointerOut={() => (document.body.style.cursor = "default")}
 					onClick={handleReset}
 					position={[0, 3.8, -0.2]}>
 					<meshMatcapMaterial matcap={material2} />
