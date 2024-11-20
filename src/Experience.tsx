@@ -3,13 +3,13 @@ import Game from "./Game";
 // import { LoadingScreen } from "./Loading";
 import { OrbitControls } from "@react-three/drei";
 import GameEnvironment from "./GameEnvironment";
-import { Perf } from "r3f-perf";
+// import { Perf } from "r3f-perf";
 import { Suspense } from "react";
 
 export default function Experience() {
 	return (
 		<>
-			<Perf position='top-left' />
+			{/* <Perf position='top-left' /> */}
 			<OrbitControls
 				makeDefault={true}
 				minDistance={4}

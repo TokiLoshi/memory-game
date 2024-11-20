@@ -65,6 +65,7 @@ npm run dev
 - Score tracking
 - Atmospheric skybox (optimized JPEG version)
 - Desktop browser compatibility
+- Smoke shader
 
 ### Known Issues ⚠️
 
@@ -146,7 +147,9 @@ Models from [poly.pizza](https://poly.pizza) and Pmnd.rs Market
 [Candle by Kay Lousberg](https://market.pmnd.rs/model/candle) CC0
 Skybox generated using [BlockadeLabs](https://skybox.blockadelabs.com)
 [Matcaps](https://github.com/nidorx/matcaps/tree/master)
-Images were generated with AI On [Canva]().
+Images were generated with AI On [Canva](https://www.canva.com/).
+HDRI conversiont to cube map from [matheowis](https://matheowis.github.io/HDRI-to-CubeMap/)
+Base for candle smoke [Perlin Noise Maker](http://kitfox.com/projects/perlinNoiseMaker/)
 
 # Resources and Inspiration:
 
