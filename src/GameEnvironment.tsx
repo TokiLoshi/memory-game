@@ -2,6 +2,7 @@ import {
 	Environment,
 	// PerspectiveCamera,
 } from "@react-three/drei";
+import Table from "./Table";
 
 export default function GameEnvironment() {
 	return (
@@ -13,8 +14,8 @@ export default function GameEnvironment() {
 				castShadow
 				shadow-mapSize={[512, 512]}
 			/>
+			<Table />
 			<Environment
-				// files='./envMaps/library.jpg'
 				files={[
 					"./envMaps/cubeMaps/px.png",
 					"./envMaps/cubeMaps/nx.png",
@@ -23,7 +24,6 @@ export default function GameEnvironment() {
 					"./envMaps/cubeMaps/pz.png",
 					"./envMaps/cubeMaps/nz.png",
 				]}
-				// files={"./envMaps/StandardCubeMap.png"}
 				background
 				ground={{
 					height: 7,

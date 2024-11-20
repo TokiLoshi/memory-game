@@ -11,9 +11,10 @@ type EndProps = {
 export default function EndScene({ material1, material2, font }: EndProps) {
 	const moves = useGameStore((state) => state.moves);
 	const reset = useGameStore((state) => state.resetGame);
+	console.log("End game states set");
 
 	const handleReset = () => {
-		console.log("User wants to play again");
+		console.log("resetting");
 		reset();
 	};
 

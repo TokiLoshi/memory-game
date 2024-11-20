@@ -11,19 +11,18 @@ type StartProps = {
 };
 
 export default function Start({ material, font, texture }: StartProps) {
-	console.log(`Material: ${material}`);
-	console.log(`font: ${font}`);
-	console.log("texture: ", texture);
 	const startGame = useGameStore((state) => state.startGame);
 
 	// Refs
 	const titleRef = useRef<Mesh>(null!);
 	const startRef = useRef<Mesh>(null!);
 
+	console.log("start component loaded");
 	const handleStart = () => {
 		console.log("handle start");
 		startGame();
 	};
+	console.log("started, now playing");
 
 	return (
 		<>

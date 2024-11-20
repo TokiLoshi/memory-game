@@ -1,9 +1,10 @@
 import Game from "./Game";
-import { Suspense } from "react";
-import { LoadingScreen } from "./Loading";
+// import { Suspense } from "react";
+// import { LoadingScreen } from "./Loading";
 import { OrbitControls } from "@react-three/drei";
 import GameEnvironment from "./GameEnvironment";
 import { Perf } from "r3f-perf";
+import { Suspense } from "react";
 
 export default function Experience() {
 	return (
@@ -19,9 +20,10 @@ export default function Experience() {
 				enableDamping={true}
 				dampingFactor={0.05}
 			/>
-			<Suspense fallback={<LoadingScreen />}>
+			<Suspense fallback={null}>
 				<Game />
-
+			</Suspense>
+			<Suspense fallback={null}>
 				<GameEnvironment />
 			</Suspense>
 		</>
