@@ -19,6 +19,8 @@ export default function Experience() {
 				target={[0.1, 4.5, 3.1]}
 				enableDamping={true}
 				dampingFactor={0.05}
+				enableZoom={true}
+				enablePan={false}
 			/>
 			<Suspense fallback={null}>
 				<Game />

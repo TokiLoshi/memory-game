@@ -8,8 +8,6 @@ export default function Table() {
 	const tableRef = useRef();
 	const candleRef = useRef();
 
-	console.log("Loading candle and table");
-
 	// Models
 	const table = useLoader(GLTFLoader, "./models/table.glb");
 	const candle = useLoader(GLTFLoader, "./models/candle.gltf");
@@ -28,11 +26,9 @@ export default function Table() {
 	// Apply shadows when models are loaded
 	useEffect(() => {
 		if (table.scene) {
-			console.log("table loaded, adding shadows");
 			traverseObject(table.scene);
 		}
 		if (candle.scene) {
-			console.log("table loaded, adding shadows");
 			traverseObject(candle.scene);
 		}
 	}, []);

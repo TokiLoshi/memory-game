@@ -17,12 +17,9 @@ export default function Start({ material, font, texture }: StartProps) {
 	const titleRef = useRef<Mesh>(null!);
 	const startRef = useRef<Mesh>(null!);
 
-	console.log("start component loaded");
 	const handleStart = () => {
-		console.log("handle start");
 		startGame();
 	};
-	console.log("started, now playing");
 
 	return (
 		<>

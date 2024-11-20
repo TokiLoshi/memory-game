@@ -54,8 +54,6 @@ export default function CardPlay({
 	const incrementMoves = useGameStore((state) => state.incrementMoves);
 	const endGame = useGameStore((state) => state.endGame);
 
-	console.log("Playing, game states loaded");
-
 	// Set grid size based on user selected level
 	const gridSize = Math.sqrt(level);
 
@@ -163,7 +161,6 @@ export default function CardPlay({
 
 	useEffect(() => {
 		if (score === level / 2) {
-			console.log("Game done, ending game");
 			endGame();
 		}
 	}, [score, level, endGame]);

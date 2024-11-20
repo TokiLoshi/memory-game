@@ -18,8 +18,6 @@ A classic memory matching game reimagined in 3D using Three.js and React. Test y
 
 Try it out: [Demo Link](https://memory-game-toki-loshi.vercel.app/)
 
-🚧 **Warning:** Currently optimized for desktop use. Mobile support is under development. It will very likely crash the browser in Safari and Chrome.
-
 ## Built With 🛠️
 
 - [React](https://reactjs.org/) - UI Framework
@@ -70,17 +68,13 @@ npm run dev
 
 ### Known Issues ⚠️
 
-- Mobile compatibility issues (particularly on iOS devices)
-- Large initial load time due to 3D assets
 - Performance optimization needed for weaker devices
 
 ## Roadmap 🛣️
 
 1. Mobile Support
 
-   - Implement mobile-friendly loading strategies
    - Optimize asset loading for mobile devices
-   - Add touch controls
 
 2. Performance Optimization
 
