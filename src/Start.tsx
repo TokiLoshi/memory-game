@@ -41,7 +41,7 @@ export default function Start({ material, font, texture }: StartProps) {
 					castShadow
 					ref={titleRef}>
 					<meshMatcapMaterial matcap={material} />
-					Memory Game
+					Magic Memory
 				</Text3D>
 				<Text3D
 					font={font}
